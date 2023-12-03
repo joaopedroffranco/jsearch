@@ -1,8 +1,5 @@
 //
-//  JSearchTests.swift
-//  JSearchTests
-//
-//  Created by João Pedro Fabiano Franco on 03.12.23.
+//  Created by João Pedro Fabiano Franco
 //
 
 import XCTest

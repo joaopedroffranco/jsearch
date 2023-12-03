@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Repository">
+   </FileRef>
+   <FileRef
+      location = "group:Foudation">
+   </FileRef>
+   <FileRef
       location = "group:JSearch.xcodeproj">
    </FileRef>
 </Workspace>

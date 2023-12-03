@@ -39,6 +39,8 @@
 		9C3CF48E2B1CD9850082B646 /* JSearchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSearchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C3CF4922B1CD9850082B646 /* JSearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSearchTests.swift; sourceTree = "<group>"; };
 		9C3CF4982B1CD9850082B646 /* JSearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C5E82FA2B1CE28700176B38 /* Foudation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Foudation; sourceTree = "<group>"; };
+		9C639E112B1CE47C0077A72D /* Repository */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Repository; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,9 +71,11 @@
 		9C3CF46F2B1CD9840082B646 = {
 			isa = PBXGroup;
 			children = (
+				9C5E82F82B1CE06A00176B38 /* Packages */,
 				9C3CF47A2B1CD9840082B646 /* JSearch */,
 				9C3CF4912B1CD9850082B646 /* JSearchTests */,
 				9C3CF4792B1CD9840082B646 /* Products */,
+				9C5E82F22B1CDE9900176B38 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,6 +108,22 @@
 			path = JSearchTests;
 			sourceTree = "<group>";
 		};
+		9C5E82F22B1CDE9900176B38 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9C5E82F82B1CE06A00176B38 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				9C5E82FA2B1CE28700176B38 /* Foudation */,
+				9C639E112B1CE47C0077A72D /* Repository */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -120,6 +140,8 @@
 			dependencies = (
 			);
 			name = JSearch;
+			packageProductDependencies = (
+			);
 			productName = JSearch;
 			productReference = 9C3CF4782B1CD9840082B646 /* JSearch.app */;
 			productType = "com.apple.product-type.application";
