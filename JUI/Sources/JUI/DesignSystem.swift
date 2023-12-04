@@ -16,7 +16,7 @@ public enum DesignSystem {
 
   public enum Fonts {
     public static let title = Font.system(size: 16).bold()
-    public static let info = Font.system(size: 14)
+    public static let info = Font.system(size: 14).bold()
     public static let description = Font.system(size: 16)
     public static let price = Font.system(size: 16).bold()
     public static let header = Font.system(size: 18)
