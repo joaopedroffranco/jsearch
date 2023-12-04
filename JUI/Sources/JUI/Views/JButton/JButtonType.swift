@@ -11,7 +11,7 @@ public enum JButtonType {
   var backgroundColor: Color {
     switch self {
     case .primary: return DesignSystem.Colors.primary
-    case .secondary: return DesignSystem.Colors.white
+    case .secondary: return DesignSystem.Colors.background
     }
   }
 

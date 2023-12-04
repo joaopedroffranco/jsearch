@@ -4,8 +4,6 @@
 
 import SwiftUI
 
-public typealias JButtonAction = () -> Void
-
 public struct JButton: View {
   let text: String
   let type: JButtonType

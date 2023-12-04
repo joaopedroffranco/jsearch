@@ -39,7 +39,7 @@ struct JTile: View {
         Text(tag)
           .padding(.leading, DesignSystem.Spacings.xs)
           .padding([.trailing, .top, .bottom], DesignSystem.Spacings.xxxs)
-          .background(Color.jWhite)
+          .background(DesignSystem.Colors.background)
           .font(DesignSystem.Fonts.price)
           .foregroundColor(DesignSystem.Colors.secondary)
       }
