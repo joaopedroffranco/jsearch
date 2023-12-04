@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-enum JButtonType {
+public enum JButtonType {
   case primary
   case secondary
 
@@ -22,11 +22,17 @@ enum JButtonType {
     }
   }
 
+  var borderWidth: CGFloat { 1.5 }
+
   var font: Font {
     DesignSystem.Fonts.button
   }
 
   var fontColor: Color {
     DesignSystem.Colors.secondary
+  }
+
+  var cornerRadius: CGFloat {
+    DesignSystem.Radius.medium
   }
 }

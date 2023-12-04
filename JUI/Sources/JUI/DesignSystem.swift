@@ -20,7 +20,19 @@ public enum DesignSystem {
     public static let description = Font.system(size: 16)
     public static let price = Font.system(size: 16).bold()
     public static let header = Font.system(size: 18)
-    public static let button = Font.system(size: 16)
+    public static let button = Font.system(size: 16).bold()
+  }
+
+  public enum Borders {
+    public static let small = 1.0
+    public static let medium = 2.0
+    public static let large = 4.0
+  }
+
+  public enum Radius {
+    public static let small: CGFloat = 2.0
+    public static let medium: CGFloat = 4.0
+    public static let large: CGFloat = 6.0
   }
 
   public enum Spacings {

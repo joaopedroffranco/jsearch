@@ -4,28 +4,56 @@
 
 import SwiftUI
 
-struct JButton: View {
-  var text: String
-  var type: JButtonType
+public typealias JButtonAction = () -> Void
 
-  init(text: String, type: JButtonType) {
+public struct JButton: View {
+  let text: String
+  let type: JButtonType
+  let action: JButtonAction?
+
+  public init(
+    text: String,
+    type: JButtonType,
+    action: JButtonAction? = nil
+  ) {
     self.text = text
     self.type = type
+    self.action = action
   }
 
-  var body: some View {
-    VStack {
+  public var body: some View {
+    buttonView
+      .onTapGesture { action?() }
+  }
+
+  private var buttonView: some View {
+    ZStack {
       Text(text)
+        .font(DesignSystem.Fonts.button)
+        .foregroundColor(type.fontColor)
     }
-    .frame(width: 200, height: 200) // tem q vir antes do background color
-    .foregroundColor(type.fontColor)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(type.backgroundColor)
+    .overlay(
+      RoundedRectangle(
+        cornerRadius: type.cornerRadius
+      )
+      .stroke(
+        type.borderColor,
+        lineWidth: type.borderWidth
+      )
+    )
   }
 }
 
 struct JButton_Previews: PreviewProvider {
   static var previews: some View {
-    JButton(text: "Mutton", type: .primary)
+    HStack(spacing: 8) {
+      JButton(text: "Primary Button", type: .primary)
 
+      JButton(text: "Secondary Button", type: .secondary)
+    }
+    .padding(.horizontal)
+    .frame(height: 50)
   }
 }
