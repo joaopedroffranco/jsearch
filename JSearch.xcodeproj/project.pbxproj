@@ -11,9 +11,6 @@
 		9C3CF4852B1CD9850082B646 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C3CF4842B1CD9850082B646 /* Assets.xcassets */; };
 		9C3CF4882B1CD9850082B646 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C3CF4862B1CD9850082B646 /* LaunchScreen.storyboard */; };
 		9C3CF4932B1CD9850082B646 /* JSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3CF4922B1CD9850082B646 /* JSearchTests.swift */; };
-		9C4F61AF2B1CF3F400B695A7 /* Foundation in Frameworks */ = {isa = PBXBuildFile; productRef = 9C4F61AE2B1CF3F400B695A7 /* Foundation */; };
-		9CA08A962B1CE79900469766 /* Repository in Frameworks */ = {isa = PBXBuildFile; productRef = 9CA08A952B1CE79900469766 /* Repository */; };
-		9CA08A982B1CE79900469766 /* UI in Frameworks */ = {isa = PBXBuildFile; productRef = 9CA08A972B1CE79900469766 /* UI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,9 +46,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CA08A962B1CE79900469766 /* Repository in Frameworks */,
-				9CA08A982B1CE79900469766 /* UI in Frameworks */,
-				9C4F61AF2B1CF3F400B695A7 /* Foundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,9 +129,6 @@
 			);
 			name = JSearch;
 			packageProductDependencies = (
-				9CA08A952B1CE79900469766 /* Repository */,
-				9CA08A972B1CE79900469766 /* UI */,
-				9C4F61AE2B1CF3F400B695A7 /* Foundation */,
 			);
 			productName = JSearch;
 			productReference = 9C3CF4782B1CD9840082B646 /* JSearch.app */;
@@ -585,21 +576,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		9C4F61AE2B1CF3F400B695A7 /* Foundation */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Foundation;
-		};
-		9CA08A952B1CE79900469766 /* Repository */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Repository;
-		};
-		9CA08A972B1CE79900469766 /* UI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = UI;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9C3CF4702B1CD9840082B646 /* Project object */;
 }

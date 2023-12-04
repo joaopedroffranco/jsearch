@@ -1,6 +1,6 @@
 //
 //  RouterProtocol.swift
-//  JFoundationKit
+//  JJFoundationKit
 //
 //  Created by João Pedro Fabiano Franco on 18.11.23.
 //

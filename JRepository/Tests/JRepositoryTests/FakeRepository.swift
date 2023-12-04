@@ -3,7 +3,7 @@
 //
 
 import UIKit
-@testable import JRepositoryRepository
+@testable import JRepository
 
 public enum FakeRepositoryError: Error {
   case invalidResponse
