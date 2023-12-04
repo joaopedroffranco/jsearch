@@ -5,7 +5,7 @@
 import SwiftUI
 import Kingfisher
 
-struct JTile: View {
+public struct JTile: View {
   let imageType: ImageType
   let title: String
   let info: String
@@ -19,7 +19,7 @@ struct JTile: View {
     info: String,
     description: String,
     tag: String,
-    height: CGFloat = 180
+    height: CGFloat = 200
   ) {
     self.imageType = imageType
     self.title = title
@@ -29,8 +29,8 @@ struct JTile: View {
     self.height = height
   }
 
-  var body: some View {
-    VStack(alignment: .leading, spacing: DesignSystem.Spacings.xs) {
+  public var body: some View {
+    VStack(alignment: .leading, spacing: DesignSystem.Spacings.standard) {
       ZStack(alignment: .bottomTrailing) {
         imageView
           .frame(height: height)
@@ -46,20 +46,22 @@ struct JTile: View {
       .background(Color.blue)
       .cornerRadius(DesignSystem.Radius.medium)
 
-      Text(info)
-        .font(DesignSystem.Fonts.info)
-        .foregroundColor(DesignSystem.Colors.info)
-        .lineLimit(1)
+      VStack(alignment: .leading, spacing: DesignSystem.Spacings.xxs) {
+        Text(info)
+          .font(DesignSystem.Fonts.info)
+          .foregroundColor(DesignSystem.Colors.info)
+          .lineLimit(1)
 
-      Text(title)
-        .font(DesignSystem.Fonts.title)
-        .foregroundColor(DesignSystem.Colors.title)
-        .lineLimit(1)
+        Text(title)
+          .font(DesignSystem.Fonts.title)
+          .foregroundColor(DesignSystem.Colors.title)
+          .lineLimit(1)
 
-      Text(description)
-        .font(DesignSystem.Fonts.description)
-        .foregroundColor(DesignSystem.Colors.description)
-        .lineLimit(1)
+        Text(description)
+          .font(DesignSystem.Fonts.description)
+          .foregroundColor(DesignSystem.Colors.description)
+          .lineLimit(1)
+      }
     }
   }
 
