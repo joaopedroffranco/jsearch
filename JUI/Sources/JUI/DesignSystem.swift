@@ -49,4 +49,9 @@ public enum DesignSystem {
     public static let xxxs = 4.0
     public static let xxxxs = 2.0
   }
+
+  public enum Icons {
+    public static let filter = "filter"
+    public static let map = "map"
+  }
 }

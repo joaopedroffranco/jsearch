@@ -5,7 +5,7 @@
 import SwiftUI
 import JUI
 
-struct JobListView: View {
+struct ShiftListView: View {
   var body: some View {
     ScrollView {
       LazyVStack(
@@ -40,8 +40,8 @@ struct JobListView: View {
   }
 }
 
-struct JobListView_Previews: PreviewProvider {
+struct ShiftListView_Previews: PreviewProvider {
   static var previews: some View {
-    JobListView()
+    ShiftListView()
   }
 }
