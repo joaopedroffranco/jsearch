@@ -13,7 +13,7 @@ public protocol JSONFileProtocol {
   var name: String { get }
 }
 
-public class FakeDataSource: DataSourceProtocol {
+public class FakeDataSource: RemoteDataSourceProtocol {
   let jsonFile: JSONFileProtocol
   public var didPost: Bool = false
 
@@ -37,7 +37,7 @@ public class FakeDataSource: DataSourceProtocol {
   }
 
   private func get(file: JSONFileProtocol) -> Data? {
-    let bundle = Bundle(for: type(of: self))
+    let bundle = Bundle.module
     guard let url = bundle.url(
       forResource: file.name,
       withExtension: "json"
