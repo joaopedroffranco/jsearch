@@ -3,9 +3,9 @@
 //
 
 import UIKit
-@testable import JRepository
+@testable import JData
 
-public enum FakeRepositoryError: Error {
+public enum FakeRemoteError: Error {
   case invalidResponse
 }
 
@@ -13,7 +13,7 @@ public protocol JSONFileProtocol {
   var name: String { get }
 }
 
-public class FakeRepository: RepositoryProtocol {
+public class FakeDataSource: DataSourceProtocol {
   let jsonFile: JSONFileProtocol
   public var didPost: Bool = false
 
@@ -26,7 +26,7 @@ public class FakeRepository: RepositoryProtocol {
       let data = get(file: jsonFile),
       let response = try? JSONDecoder().decode(T.self, from: data)
     else {
-      throw FakeRepositoryError.invalidResponse
+      throw FakeRemoteError.invalidResponse
     }
 
     return response

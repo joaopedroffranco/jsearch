@@ -4,13 +4,7 @@
 
 import Foundation
 
-public enum RepositoryError: Error {
-  case invalidRequest
-  case decodeError
-  case requestFailed
-}
-
-public class DefaultRepository: RepositoryProtocol {
+public class RemoteDataSource: DataSourceProtocol {
   let session: URLSession
 
   public init(session: URLSession = .shared) {
@@ -19,7 +13,7 @@ public class DefaultRepository: RepositoryProtocol {
 
   public func fetch<T>(request: Requestable) async throws -> T where T: Decodable {
     guard let request = request.request else {
-      throw RepositoryError.invalidRequest
+      throw RemoteError.invalidRequest
     }
 
     let (data, _) = try await session.data(for: request)
@@ -28,20 +22,20 @@ public class DefaultRepository: RepositoryProtocol {
     do {
       return try decoder.decode(T.self, from: data)
     } catch {
-      throw RepositoryError.decodeError
+      throw RemoteError.decodeError
     }
   }
 
   public func post(request: Requestable) async throws {
     guard let request = request.request else {
-      throw RepositoryError.invalidRequest
+      throw RemoteError.invalidRequest
     }
 
     do {
       let (data, _) = try await session.data(for: request)
-      if data.isEmpty { throw RepositoryError.requestFailed }
+      if data.isEmpty { throw RemoteError.requestFailed }
     } catch {
-      throw RepositoryError.requestFailed
+      throw RemoteError.requestFailed
     }
   }
 }
