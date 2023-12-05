@@ -3,12 +3,29 @@
 //
 
 import SwiftUI
+import JData
 import JUI
 
-struct ShiftsScreen: View {
-  var body: some View {
+extension ShiftsScreen {
+  var initialView: some View {
+    Text("Initial State")
+      .padding()
+  }
+
+  var loadingView: some View {
+    ProgressView("Loading shifts...")
+      .progressViewStyle(CircularProgressViewStyle())
+      .padding()
+  }
+
+  var errorView: some View {
+    Text("Error on getting shifts")
+      .padding()
+  }
+
+  func loadedView(viewModel: ShiftsViewModel) -> some View {
     ZStack(alignment: .bottom) {
-      ShiftListView()
+      ShiftListView(viewModel: viewModel)
 
       VStack(spacing: DesignSystem.Spacings.medium) {
         JFloatButtons(buttons: [
@@ -31,11 +48,5 @@ struct ShiftsScreen: View {
       }
     }
     .background(DesignSystem.Colors.background)
-  }
-}
-
-struct ShiftsScreen_Previews: PreviewProvider {
-  static var previews: some View {
-    ShiftsScreen()
   }
 }

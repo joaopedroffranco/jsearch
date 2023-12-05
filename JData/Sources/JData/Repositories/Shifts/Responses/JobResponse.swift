@@ -4,7 +4,7 @@
 
 import Foundation
 
-public protocol JobModel: Decodable {
+public protocol JobModel {
   var clientName: String { get }
   var imageURL: URL { get }
   var category: String { get }

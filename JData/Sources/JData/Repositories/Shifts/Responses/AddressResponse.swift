@@ -5,7 +5,7 @@
 import Foundation
 import CoreLocation
 
-public protocol AddressModel: Decodable {
+public protocol AddressModel {
   var coordinate: CLLocation { get }
 }
 

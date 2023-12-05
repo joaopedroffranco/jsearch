@@ -4,7 +4,7 @@
 
 import Foundation
 
-public protocol ShiftsModel: Decodable {
+public protocol ShiftsModel {
   var data: [ShiftModel] { get }
   var count: Int { get }
 }

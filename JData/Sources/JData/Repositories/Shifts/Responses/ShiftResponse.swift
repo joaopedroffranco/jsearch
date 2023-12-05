@@ -4,7 +4,7 @@
 
 import Foundation
 
-public protocol ShiftModel: Decodable {
+public protocol ShiftModel {
   var id: String { get }
   var startsAt: Date { get }
   var endsAt: Date { get }

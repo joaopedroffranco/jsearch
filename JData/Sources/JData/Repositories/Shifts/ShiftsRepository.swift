@@ -11,7 +11,7 @@ public protocol ShiftsRepositoryProtocol: AnyObject {
 public class ShiftsRepository: ShiftsRepositoryProtocol {
   var dataSource: RemoteDataSourceProtocol
 
-  init(dataSource: RemoteDataSourceProtocol = URLSessionDataSource()) {
+  public init(dataSource: RemoteDataSourceProtocol = URLSessionDataSource()) {
     self.dataSource = dataSource
   }
 
