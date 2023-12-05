@@ -4,7 +4,7 @@
 
 import Foundation
 
-public protocol DataSourceProtocol: AnyObject {
+public protocol RemoteDataSourceProtocol: AnyObject {
   func fetch<T: Decodable>(request: Requestable) async throws -> T
   func post(request: Requestable) async throws
 }

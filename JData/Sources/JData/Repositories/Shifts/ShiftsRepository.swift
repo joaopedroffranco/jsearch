@@ -5,17 +5,22 @@
 import Foundation
 
 public protocol ShiftsRepositoryProtocol: AnyObject {
-  func getShifts() async -> ShiftsModel?
+  func getShifts(for date: Date?) async -> ShiftsModel?
 }
 
 public class ShiftsRepository: ShiftsRepositoryProtocol {
-  var dataSource: DataSourceProtocol
+  var dataSource: RemoteDataSourceProtocol
 
-  init(dataSource: DataSourceProtocol = RemoteDataSource()) {
+  init(dataSource: RemoteDataSourceProtocol = URLSessionDataSource()) {
     self.dataSource = dataSource
   }
 
-  public func getShifts() async -> ShiftsModel? {
-    return nil
+  public func getShifts(for date: Date?) async -> ShiftsModel? {
+    do {
+      let response: ShiftsResponse = try await dataSource.fetch(request: TemperRequest.shifts(date: date))
+      return response
+    } catch {
+      return nil
+    }
   }
 }

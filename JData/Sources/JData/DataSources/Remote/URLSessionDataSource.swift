@@ -4,7 +4,7 @@
 
 import Foundation
 
-public class RemoteDataSource: DataSourceProtocol {
+public class URLSessionDataSource: RemoteDataSourceProtocol {
   let session: URLSession
 
   public init(session: URLSession = .shared) {
