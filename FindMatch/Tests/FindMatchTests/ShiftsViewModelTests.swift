@@ -12,11 +12,12 @@ final class ShiftsViewModelTests: XCTestCase {
     let model = ShiftsModelStub.instance()
 
     // when
-    let viewModel = ShiftsViewModel(shiftsModel: model)
+    let viewModel = ShiftsViewModel(shiftsModel: model, from: .today)
 
     // then
-    expect(viewModel?.shifts).notTo(beEmpty())
-    expect(viewModel?.shifts.count).to(equal(5))
+    expect(viewModel?.shiftViewModels).notTo(beEmpty())
+    expect(viewModel?.shiftViewModels.count).to(equal(5))
+    expect(viewModel?.day).to(equal(Date.today.weekDay))
   }
 
   func testEmpty() {
@@ -24,10 +25,10 @@ final class ShiftsViewModelTests: XCTestCase {
     let model = ShiftsModelStub.instance(numberOfShifts: 0)
 
     // when
-    let viewModel = ShiftsViewModel(shiftsModel: model)
+    let viewModel = ShiftsViewModel(shiftsModel: model, from: .today)
 
     // then
-    expect(viewModel?.shifts).to(beNil())
+    expect(viewModel).to(beNil())
   }
 
   func testNil() {
@@ -35,10 +36,10 @@ final class ShiftsViewModelTests: XCTestCase {
     let model: ShiftsModelStub? = nil
 
     // when
-    let viewModel = ShiftsViewModel(shiftsModel: model)
+    let viewModel = ShiftsViewModel(shiftsModel: model, from: .today)
 
     // then
-    expect(viewModel?.shifts).to(beNil())
+    expect(viewModel).to(beNil())
   }
 }
 

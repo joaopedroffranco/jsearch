@@ -6,14 +6,14 @@ import Foundation
 import JUI
 import JData
 
-struct ShiftViewModel {
+class ShiftViewModel {
   var image: ImageType
   var title: String
   var period: String
   var earningsPerHour: String
   var info: String
 
-  init(shiftModel: ShiftModel) {
+  convenience init(shiftModel: ShiftModel) {
     let jobModel = shiftModel.job
     // TODO: get location
     let myLocation = "12 km"

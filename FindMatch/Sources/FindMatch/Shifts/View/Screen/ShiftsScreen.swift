@@ -6,21 +6,21 @@ import SwiftUI
 import JUI
 
 struct ShiftsScreen: View {
-  @ObservedObject var viewModel: ShiftsScreenViewModel
+  @ObservedObject var screenViewModel: ShiftsScreenViewModel
 
   var body: some View {
     mainView
-      .onAppear { viewModel.getTodayShifts() }
-      .refreshable { viewModel.getTodayShifts() }
+      .onAppear { screenViewModel.getTodayShifts() }
+      .refreshable { screenViewModel.getTodayShifts() }
   }
 
   @ViewBuilder
   private var mainView: some View {
-    switch viewModel.state {
+    switch screenViewModel.state {
     case .initial: initialView
     case .loading: loadingView
     case .error: errorView
-    case let .loaded(viewModel): loadedView(viewModel: viewModel)
+    case let .loaded(viewModels): loadedView(viewModels: viewModels)
     }
   }
 }
@@ -47,19 +47,19 @@ struct ShiftsScreen_Previews: PreviewProvider {
   static let loadedState: ShiftsScreenViewModel = {
     let viewModel = ShiftsScreenViewModel()
     let shiftsViewModel = ShiftsScreenPreviewModel.shiftsViewModel()
-    viewModel.state = .loaded(viewModel: shiftsViewModel)
+    viewModel.state = .loaded(viewModels: [shiftsViewModel])
     return viewModel
   }()
 
   static var previews: some View {
     Group {
-      ShiftsScreen(viewModel: initialState)
+      ShiftsScreen(screenViewModel: initialState)
         .previewDisplayName("Initial")
-      ShiftsScreen(viewModel: loadingState)
+      ShiftsScreen(screenViewModel: loadingState)
         .previewDisplayName("Loading")
-      ShiftsScreen(viewModel: errorState)
+      ShiftsScreen(screenViewModel: errorState)
         .previewDisplayName("Error")
-      ShiftsScreen(viewModel: loadedState)
+      ShiftsScreen(screenViewModel: loadedState)
         .previewDisplayName("Loaded")
     }
   }

@@ -24,12 +24,13 @@ class ShiftsScreenViewModel: ObservableObject, ShiftsViewModelProtocol {
 
   func getTodayShifts() {
     Task {
-      let shiftsModel = await shiftsRepository.getShifts(for: Date.today)
-      let shiftsViewModel = viewModel(from: shiftsModel)
+      let today = Date.today
+      let shiftsModel = await shiftsRepository.getShifts(for: today)
+      let todayShiftsViewModel = viewModel(from: shiftsModel, date: today)
 
       Task { @MainActor in
-        if let shiftsViewModel {
-          state = .loaded(viewModel: shiftsViewModel)
+        if let todayShiftsViewModel {
+          state = .loaded(viewModels: [todayShiftsViewModel])
         } else {
           state = .error
         }
@@ -39,7 +40,7 @@ class ShiftsScreenViewModel: ObservableObject, ShiftsViewModelProtocol {
 }
 
 private extension ShiftsScreenViewModel {
-  func viewModel(from model: ShiftsModel?) -> ShiftsViewModel? {
-    ShiftsViewModel(shiftsModel: model)
+  func viewModel(from model: ShiftsModel?, date: Date) -> ShiftsViewModel? {
+    ShiftsViewModel(shiftsModel: model, from: date)
   }
 }

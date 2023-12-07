@@ -9,7 +9,7 @@ public extension Date {
 
   var weekDay: String {
     let formatter = DateFormatter()
-    formatter.dateFormat = "EE d M"
+    formatter.dateFormat = "EEEE d MMMM"
     return formatter.string(from: self)
   }
 

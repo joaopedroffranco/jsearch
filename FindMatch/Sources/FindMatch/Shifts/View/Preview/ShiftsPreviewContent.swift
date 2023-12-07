@@ -3,10 +3,12 @@
 //
 
 import Foundation
+import JFoundation
 
 enum ShiftsScreenPreviewModel {
   static func shiftsViewModel(numberOfShifts: Int = 5) -> ShiftsViewModel {
-    ShiftsViewModel(shifts: Array(repeating: shiftViewModel, count: numberOfShifts))
+    let viewModels = Array(repeating: shiftViewModel, count: numberOfShifts)
+    return ShiftsViewModel(day: Date.today.weekDay, shiftViewModels: viewModels)
   }
 
   static var shiftViewModel = ShiftViewModel(

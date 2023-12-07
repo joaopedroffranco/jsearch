@@ -8,6 +8,6 @@ import JData
 enum ShiftsState {
   case initial
   case loading
-  case loaded(viewModel: ShiftsViewModel)
+  case loaded(viewModels: [ShiftsViewModel])
   case error
 }

@@ -5,9 +5,10 @@
 import SwiftUI
 import JUI
 import JData
+import JFoundation
 
 struct ShiftListView: View {
-  var viewModel: ShiftsViewModel
+  var viewModels: [ShiftsViewModel]
 
   var body: some View {
     ScrollView {
@@ -15,21 +16,24 @@ struct ShiftListView: View {
         alignment: .leading,
         spacing: DesignSystem.Spacings.small
       ) {
-        sectionView()
+        ForEach(Array(viewModels.enumerated()), id: \.offset) {
+          sectionView($0.element)
+        }
       }
     }
     .padding(.horizontal, DesignSystem.Spacings.standard)
   }
 
   @ViewBuilder
-  private func sectionView() -> some View {
+  private func sectionView(_ shiftsViewModel: ShiftsViewModel) -> some View {
     Section {
-      Text("Sunday 8 December")
+      Text(shiftsViewModel.day)
         .font(DesignSystem.Fonts.header)
         .foregroundColor(DesignSystem.Colors.header)
     }
+    .padding(.vertical, DesignSystem.Spacings.xs)
 
-    ForEach(Array(viewModel.shifts.enumerated()), id: \.offset) {
+    ForEach(Array(shiftsViewModel.shiftViewModels.enumerated()), id: \.offset) {
       itemView($0.element)
     }
     .padding(.horizontal, DesignSystem.Spacings.xs)
@@ -49,6 +53,6 @@ struct ShiftListView: View {
 
 struct ShiftListView_Previews: PreviewProvider {
   static var previews: some View {
-    ShiftListView(viewModel: ShiftsScreenPreviewModel.shiftsViewModel())
+    ShiftListView(viewModels: [ShiftsScreenPreviewModel.shiftsViewModel()])
   }
 }

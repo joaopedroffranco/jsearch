@@ -5,15 +5,18 @@
 import Foundation
 import JData
 
-struct ShiftsViewModel {
-  var shifts: [ShiftViewModel]
+class ShiftsViewModel {
+  var day: String
+  var shiftViewModels: [ShiftViewModel]
 
-  init?(shiftsModel: ShiftsModel?) {
+  convenience init?(shiftsModel: ShiftsModel?, from date: Date) {
     guard let shiftsModel, !shiftsModel.data.isEmpty else { return nil }
-    self.init(shifts: shiftsModel.data.map { ShiftViewModel(shiftModel: $0) })
+    let shiftViewModels = shiftsModel.data.map { ShiftViewModel(shiftModel: $0) }
+    self.init(day: date.weekDay, shiftViewModels: shiftViewModels)
   }
 
-  init(shifts: [ShiftViewModel]) {
-    self.shifts = shifts
+  init(day: String, shiftViewModels: [ShiftViewModel]) {
+    self.day = day
+    self.shiftViewModels = shiftViewModels
   }
 }
