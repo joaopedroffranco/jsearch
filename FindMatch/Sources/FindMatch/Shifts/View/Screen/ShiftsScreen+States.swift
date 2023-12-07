@@ -25,7 +25,9 @@ extension ShiftsScreen {
 
   func loadedView(viewModels: [ShiftsViewModel]) -> some View {
     ZStack(alignment: .bottom) {
-      ShiftListView(viewModels: viewModels)
+      ShiftListView(viewModels: viewModels) { sectionIndex, itemIndex in
+        screenViewModel.getFollowingShiftsIfNeeded(section: sectionIndex, index: itemIndex)
+      }
 
       VStack(spacing: DesignSystem.Spacings.medium) {
         JFloatButtons(buttons: [

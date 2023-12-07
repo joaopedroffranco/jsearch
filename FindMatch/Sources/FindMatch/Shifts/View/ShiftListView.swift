@@ -7,8 +7,11 @@ import JUI
 import JData
 import JFoundation
 
+typealias ItemOnAppear = (Int, Int) -> Void
+
 struct ShiftListView: View {
   var viewModels: [ShiftsViewModel]
+  var onItemAppear: ItemOnAppear?
 
   var body: some View {
     ScrollView {
@@ -16,8 +19,11 @@ struct ShiftListView: View {
         alignment: .leading,
         spacing: DesignSystem.Spacings.small
       ) {
-        ForEach(Array(viewModels.enumerated()), id: \.offset) {
-          sectionView($0.element)
+        ForEach(
+          Array(viewModels.enumerated()),
+          id: \.offset
+        ) {
+          sectionView($0.element, sectionIndex: $0.offset)
         }
       }
     }
@@ -25,7 +31,7 @@ struct ShiftListView: View {
   }
 
   @ViewBuilder
-  private func sectionView(_ shiftsViewModel: ShiftsViewModel) -> some View {
+  private func sectionView(_ shiftsViewModel: ShiftsViewModel, sectionIndex: Int) -> some View {
     Section {
       Text(shiftsViewModel.day)
         .font(DesignSystem.Fonts.header)
@@ -33,8 +39,12 @@ struct ShiftListView: View {
     }
     .padding(.vertical, DesignSystem.Spacings.xs)
 
-    ForEach(Array(shiftsViewModel.shiftViewModels.enumerated()), id: \.offset) {
-      itemView($0.element)
+    ForEach(
+      Array(shiftsViewModel.shiftViewModels.enumerated()),
+      id: \.offset
+    ) { index, item in
+      itemView(item)
+        .onAppear { onItemAppear?(sectionIndex, index) }
     }
     .padding(.horizontal, DesignSystem.Spacings.xs)
   }
@@ -53,6 +63,9 @@ struct ShiftListView: View {
 
 struct ShiftListView_Previews: PreviewProvider {
   static var previews: some View {
-    ShiftListView(viewModels: [ShiftsScreenPreviewModel.shiftsViewModel()])
+    ShiftListView(
+      viewModels: [ShiftsScreenPreviewModel.shiftsViewModel()],
+      onItemAppear: nil
+    )
   }
 }

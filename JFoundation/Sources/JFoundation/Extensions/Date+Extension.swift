@@ -23,4 +23,8 @@ public extension Date {
     let calendar = Calendar.current
     return calendar.date(bySettingHour: hour, minute: minutes, second: .zero, of: self) ?? self
   }
+
+  func following(_ value: Int = 1) -> Date? {
+    Calendar.current.date(byAdding: .day, value: value, to: self)
+  }
 }
