@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum ImageType {
+public enum ImageType: Equatable {
   case local(name: String, bundle: Bundle)
   case remote(url: URL)
 }

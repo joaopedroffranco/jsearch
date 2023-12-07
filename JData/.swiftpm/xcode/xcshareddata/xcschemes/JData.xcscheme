@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FindMatch"
-               BuildableName = "FindMatch"
-               BlueprintName = "FindMatch"
+               BlueprintIdentifier = "JData"
+               BuildableName = "JData"
+               BlueprintName = "JData"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FindMatchTests"
-               BuildableName = "FindMatchTests"
-               BlueprintName = "FindMatchTests"
+               BlueprintIdentifier = "JDataTests"
+               BuildableName = "JDataTests"
+               BlueprintName = "JDataTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -60,9 +60,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FindMatch"
-            BuildableName = "FindMatch"
-            BlueprintName = "FindMatch"
+            BlueprintIdentifier = "JData"
+            BuildableName = "JData"
+            BlueprintName = "JData"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>

@@ -21,7 +21,7 @@ enum TemperRequest: Requestable {
     switch self {
     case let .shifts(date):
       guard let date else { return nil }
-      return ["filterdate": date.description]
+      return ["filter[date]": date.description]
     }
   }
 

@@ -8,9 +8,9 @@ import JData
 struct ShiftsViewModel {
   var shifts: [ShiftViewModel]
 
-  init?(shifts: ShiftsModel?) {
-    guard let shifts else { return nil }
-    self.init(shifts: shifts.data.map { ShiftViewModel(shiftModel: $0) })
+  init?(shiftsModel: ShiftsModel?) {
+    guard let shiftsModel, !shiftsModel.data.isEmpty else { return nil }
+    self.init(shifts: shiftsModel.data.map { ShiftViewModel(shiftModel: $0) })
   }
 
   init(shifts: [ShiftViewModel]) {

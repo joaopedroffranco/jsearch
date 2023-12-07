@@ -21,7 +21,7 @@ struct ShiftViewModel {
     self.init(
       image: .remote(url: jobModel.imageURL),
       title: jobModel.clientName,
-      period: shiftModel.startsAt.hour + shiftModel.endsAt.hour,
+      period: "\(shiftModel.startsAt.hour) - \(shiftModel.endsAt.hour)",
       earningsPerHour: shiftModel.earningsPerHour,
       info: "\(category) • \(myLocation)"
     )

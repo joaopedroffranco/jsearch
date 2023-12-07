@@ -17,13 +17,17 @@ let package = Package(
         // .package(url: /* package url */, from: "1.0.0"),
       .package(name: "JUI", path: "../JUI"),
       .package(name: "JData", path: "../JData"),
-      .package(name: "JFoundation", path: "../JFoundation")
+      .package(name: "JFoundation", path: "../JFoundation"),
+      .package(url: "https://github.com/Quick/Nimble.git", from: "12.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "FindMatch",
-            dependencies: ["JUI", "JData", "JFoundation"])
+            dependencies: ["JUI", "JData", "JFoundation"]),
+        .testTarget(
+            name: "FindMatchTests",
+            dependencies: ["FindMatch", "Nimble", "JData"]),
     ]
 )

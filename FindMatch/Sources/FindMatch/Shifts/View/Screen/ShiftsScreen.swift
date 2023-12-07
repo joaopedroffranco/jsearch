@@ -11,6 +11,7 @@ struct ShiftsScreen: View {
   var body: some View {
     mainView
       .onAppear { viewModel.getTodayShifts() }
+      .refreshable { viewModel.getTodayShifts() }
   }
 
   @ViewBuilder

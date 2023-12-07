@@ -40,6 +40,6 @@ class ShiftsScreenViewModel: ObservableObject, ShiftsViewModelProtocol {
 
 private extension ShiftsScreenViewModel {
   func viewModel(from model: ShiftsModel?) -> ShiftsViewModel? {
-    ShiftsViewModel(shifts: model)
+    ShiftsViewModel(shiftsModel: model)
   }
 }
