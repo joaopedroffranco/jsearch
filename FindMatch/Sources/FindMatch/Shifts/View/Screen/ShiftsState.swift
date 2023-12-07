@@ -5,7 +5,7 @@
 import Foundation
 import JData
 
-enum ShiftsState {
+enum ShiftsState: Equatable {
   case initial
   case loading
   case loaded(viewModels: [ShiftsViewModel])

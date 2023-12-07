@@ -41,3 +41,13 @@ class ShiftViewModel {
     self.info = info
   }
 }
+
+extension ShiftViewModel: Equatable {
+  static func == (lhs: ShiftViewModel, rhs: ShiftViewModel) -> Bool {
+    lhs.title == rhs.title &&
+    lhs.period == rhs.period &&
+    lhs.image == rhs.image &&
+    lhs.info == rhs.info &&
+    lhs.image == rhs.image
+  }
+}

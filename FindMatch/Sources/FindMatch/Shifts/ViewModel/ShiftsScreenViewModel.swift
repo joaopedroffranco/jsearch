@@ -23,6 +23,8 @@ class ShiftsScreenViewModel: ObservableObject, ShiftsViewModelProtocol {
   }
 
   func getTodayShifts() {
+    state = .loading
+
     Task {
       let today = Date.today
       let shiftsModel = await shiftsRepository.getShifts(for: today)

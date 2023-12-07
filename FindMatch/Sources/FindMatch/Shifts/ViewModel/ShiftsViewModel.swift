@@ -20,3 +20,10 @@ class ShiftsViewModel {
     self.shiftViewModels = shiftViewModels
   }
 }
+
+extension ShiftsViewModel: Equatable {
+  static func == (lhs: ShiftsViewModel, rhs: ShiftsViewModel) -> Bool {
+    lhs.day == rhs.day &&
+    lhs.shiftViewModels == rhs.shiftViewModels
+  }
+}
