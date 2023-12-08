@@ -5,9 +5,11 @@
 //  Created by João Pedro Fabiano Franco on 18.11.23.
 //
 
-import Foundation
+import UIKit
 
-public protocol RouterProtocol {
+public protocol RouterProtocol: AnyObject {
+  /// weak reference
+  var parentRouter: RouterDelegate? { get }
+
   func start()
-  func dismiss()
 }

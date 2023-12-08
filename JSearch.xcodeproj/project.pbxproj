@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C08CADF2B2384E300D97C28 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C08CADE2B2384E300D97C28 /* MainRouter.swift */; };
+		9C08CAE12B23850800D97C28 /* FindMatch in Frameworks */ = {isa = PBXBuildFile; productRef = 9C08CAE02B23850800D97C28 /* FindMatch */; };
+		9C08CAE32B23850800D97C28 /* JData in Frameworks */ = {isa = PBXBuildFile; productRef = 9C08CAE22B23850800D97C28 /* JData */; };
+		9C08CAE52B23850800D97C28 /* JFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 9C08CAE42B23850800D97C28 /* JFoundation */; };
+		9C08CAE72B23850800D97C28 /* JUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9C08CAE62B23850800D97C28 /* JUI */; };
 		9C3CF47C2B1CD9840082B646 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3CF47B2B1CD9840082B646 /* AppDelegate.swift */; };
 		9C3CF4852B1CD9850082B646 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C3CF4842B1CD9850082B646 /* Assets.xcassets */; };
 		9C3CF4882B1CD9850082B646 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C3CF4862B1CD9850082B646 /* LaunchScreen.storyboard */; };
@@ -31,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C08CADE2B2384E300D97C28 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
 		9C3CF4782B1CD9840082B646 /* JSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C3CF47B2B1CD9840082B646 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C3CF4842B1CD9850082B646 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -46,6 +52,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C08CAE52B23850800D97C28 /* JFoundation in Frameworks */,
+				9C08CAE12B23850800D97C28 /* FindMatch in Frameworks */,
+				9C08CAE32B23850800D97C28 /* JData in Frameworks */,
+				9C08CAE72B23850800D97C28 /* JUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +76,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9C08CADD2B2384D500D97C28 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				9C08CADE2B2384E300D97C28 /* MainRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
 		9C3CF46F2B1CD9840082B646 = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +107,7 @@
 		9C3CF47A2B1CD9840082B646 /* JSearch */ = {
 			isa = PBXGroup;
 			children = (
+				9C08CADD2B2384D500D97C28 /* Router */,
 				9C3CF47B2B1CD9840082B646 /* AppDelegate.swift */,
 				9C3CF4842B1CD9850082B646 /* Assets.xcassets */,
 				9C3CF4862B1CD9850082B646 /* LaunchScreen.storyboard */,
@@ -129,6 +148,10 @@
 			);
 			name = JSearch;
 			packageProductDependencies = (
+				9C08CAE02B23850800D97C28 /* FindMatch */,
+				9C08CAE22B23850800D97C28 /* JData */,
+				9C08CAE42B23850800D97C28 /* JFoundation */,
+				9C08CAE62B23850800D97C28 /* JUI */,
 			);
 			productName = JSearch;
 			productReference = 9C3CF4782B1CD9840082B646 /* JSearch.app */;
@@ -245,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C3CF47C2B1CD9840082B646 /* AppDelegate.swift in Sources */,
+				9C08CADF2B2384E300D97C28 /* MainRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,6 +600,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9C08CAE02B23850800D97C28 /* FindMatch */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FindMatch;
+		};
+		9C08CAE22B23850800D97C28 /* JData */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = JData;
+		};
+		9C08CAE42B23850800D97C28 /* JFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = JFoundation;
+		};
+		9C08CAE62B23850800D97C28 /* JUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = JUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9C3CF4702B1CD9840082B646 /* Project object */;
 }

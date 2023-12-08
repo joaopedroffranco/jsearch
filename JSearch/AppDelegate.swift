@@ -8,6 +8,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
+  var mainRouter: MainRouter?
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
@@ -18,12 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   private func startApp() {
-    let viewController = UIViewController()
-    viewController.view.backgroundColor = .blue
+    let navigationController = UINavigationController()
 
-    let navigationController = UINavigationController(rootViewController: viewController)
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
+
+    mainRouter = MainRouter(navigationController: navigationController)
+    mainRouter?.start()
   }
 }
 
