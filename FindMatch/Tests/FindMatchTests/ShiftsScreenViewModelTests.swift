@@ -60,7 +60,22 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     expect(screenViewModel.state).toEventually(equal(.error))
   }
 
-  /// Infinite Scroll
+  func testGetTodayPullToRefresh() {
+    // given
+    let todayModel = ShiftsModelStub.instance()
+    let repository = FakeShiftsRepository(with: todayModel)
+    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+
+    // when
+    screenViewModel.getTodayShifts(isPullRefreshing: true)
+
+    // then
+    expect(screenViewModel.state).notTo(equal(.loading))
+    expect(screenViewModel.currentDate.weekDay).to(equal(Date.today.weekDay))
+  }
+
+  // MARK: - Infinite Scroll
+
   func testGetFollowing() {
     // given
     let todayModel = ShiftsModelStub.instance()
@@ -84,9 +99,45 @@ final class ShiftsScreenViewModelTests: XCTestCase {
       fail("The expected is nil")
       return
     }
+
+    expect(screenViewModel.isLoadingFollowing).to(beTrue())
+    expect(screenViewModel.isLoadingFollowing).toEventually(beFalse())
     expect(screenViewModel.state).toEventually(equal(.loaded(viewModels: [todayShiftsViewModel] + [expectedFollowingShiftsViewModel])))
     expect(screenViewModel.currentDate.weekDay).toEventually(equal(followingDate.weekDay))
     expect(screenViewModel.currentDate.weekDay).toEventually(equal(expectedFollowingShiftsViewModel.day))
+  }
+
+  func testGetFollowingWhenIsAlreadyGetting() {
+    // given
+    let todayModel = ShiftsModelStub.instance()
+    let followingModel = ShiftsModelStub.instance()
+    let repository = FakeShiftsRepository(with: followingModel)
+    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+
+    guard let todayShiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: screenViewModel.currentDate) else {
+      fail("Couldn't proceed with the test")
+      return
+    }
+    screenViewModel.state = .loaded(viewModels: [todayShiftsViewModel])
+
+    // when
+    screenViewModel.isLoadingFollowing = true
+    screenViewModel.getFollowingShifts()
+
+    // then
+    guard
+      let followingDate = Date.today.following(),
+      let expectedFollowingShiftsViewModel = ShiftsViewModel(shiftsModel: followingModel, from: followingDate) else {
+      fail("The expected is nil")
+      return
+    }
+
+    expect(screenViewModel.isLoadingFollowing).to(beTrue())
+    expect(screenViewModel.isLoadingFollowing).toNotEventually(beFalse())
+    expect(screenViewModel.state).toNotEventually(equal(.loaded(viewModels: [todayShiftsViewModel] + [expectedFollowingShiftsViewModel])))
+    expect(screenViewModel.state).toEventually(equal(.loaded(viewModels: [todayShiftsViewModel])))
+    expect(screenViewModel.currentDate.weekDay).toEventually(equal(Date.today.weekDay))
+    expect(screenViewModel.currentDate.weekDay).toEventually(equal(todayShiftsViewModel.day))
   }
 
   func testGetFollowingEmpty() {
@@ -106,6 +157,8 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     screenViewModel.getFollowingShifts()
 
     // then
+    expect(screenViewModel.isLoadingFollowing).toNotEventually(beTrue())
+    expect(screenViewModel.isLoadingFollowing).to(beFalse())
     expect(screenViewModel.state).toEventually(equal(.loaded(viewModels: [todayShiftsViewModel])))
     expect(screenViewModel.currentDate.weekDay).toEventually(equal(Date.today.weekDay))
     expect(screenViewModel.currentDate.weekDay).toEventually(equal(todayShiftsViewModel.day))
@@ -128,6 +181,8 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     screenViewModel.getFollowingShifts()
 
     // then
+    expect(screenViewModel.isLoadingFollowing).toNotEventually(beTrue())
+    expect(screenViewModel.isLoadingFollowing).to(beFalse())
     expect(screenViewModel.state).toEventually(equal(.loaded(viewModels: [todayShiftsViewModel])))
     expect(screenViewModel.currentDate.weekDay).toEventually(equal(Date.today.weekDay))
     expect(screenViewModel.currentDate.weekDay).toEventually(equal(todayShiftsViewModel.day))
@@ -150,6 +205,8 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     screenViewModel.getFollowingShifts()
 
     // then
+    expect(screenViewModel.isLoadingFollowing).toNotEventually(beTrue())
+    expect(screenViewModel.isLoadingFollowing).to(beFalse())
     expect(screenViewModel.state).toEventually(equal(.initial))
     expect(screenViewModel.currentDate.weekDay).toEventually(equal(Date.today.weekDay))
     expect(screenViewModel.currentDate.weekDay).toEventually(equal(todayShiftsViewModel.day))
@@ -172,6 +229,8 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     screenViewModel.getFollowingShifts()
 
     // then
+    expect(screenViewModel.isLoadingFollowing).toNotEventually(beTrue())
+    expect(screenViewModel.isLoadingFollowing).to(beFalse())
     expect(screenViewModel.state).toEventually(equal(.error))
     expect(screenViewModel.currentDate.weekDay).toEventually(equal(Date.today.weekDay))
     expect(screenViewModel.currentDate.weekDay).toEventually(equal(todayShiftsViewModel.day))

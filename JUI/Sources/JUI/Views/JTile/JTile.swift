@@ -74,6 +74,8 @@ public struct JTile: View {
         .scaledToFill()
     case let .remote(url):
       KFImage(url)
+        .memoryCacheExpiration(.expired)
+        .diskCacheExpiration(.expired)
         .resizable()
         .scaledToFill()
     }

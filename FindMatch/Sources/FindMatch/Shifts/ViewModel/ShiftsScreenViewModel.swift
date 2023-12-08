@@ -20,6 +20,7 @@ class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProtocol {
   private var shiftsRepository: ShiftsRepositoryProtocol
   private let getFollowingThreshold = 2
 
+  var isLoadingFollowing = false
   var currentDate: Date = .today
 
   init(shiftsRepository: ShiftsRepositoryProtocol = ShiftsRepository()) {
@@ -27,7 +28,11 @@ class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProtocol {
   }
 
   func getTodayShifts(isPullRefreshing: Bool = false) {
-    if !isPullRefreshing { state = .loading }
+    if isPullRefreshing {
+      reset()
+    } else {
+      state = .loading
+    }
 
     Task {
       let todayShiftsViewModel = await getShifts(from: currentDate)
@@ -58,14 +63,17 @@ class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProtocol {
   }
 
   func getFollowingShifts() {
-    if case let .loaded(viewModels) = state, let followingDate = currentDate.following() {
+    if case let .loaded(viewModels) = state, let followingDate = currentDate.following(), !isLoadingFollowing {
+      isLoadingFollowing = true
       Task {
-        if let followingShiftsViewModel = await getShifts(from: followingDate) {
-          Task { @MainActor in
+        let followingShiftsViewModel = await getShifts(from: followingDate)
+        Task { @MainActor in
+          if let followingShiftsViewModel {
             let newViewModels = viewModels + [followingShiftsViewModel]
             state = .loaded(viewModels: newViewModels)
             currentDate = followingDate
           }
+          isLoadingFollowing = false
         }
       }
     }
@@ -84,5 +92,10 @@ private extension ShiftsScreenViewModel {
 
   func shouldGetMoreShifts(sectionIndex: Int, daysCount: Int, index: Int, shiftsCount: Int) -> Bool {
     sectionIndex == daysCount - 1 && index > shiftsCount - getFollowingThreshold
+  }
+
+  func reset() {
+    isLoadingFollowing = false
+    currentDate = .today
   }
 }

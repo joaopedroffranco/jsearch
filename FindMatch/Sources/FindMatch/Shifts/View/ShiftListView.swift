@@ -17,7 +17,8 @@ struct ShiftListView: View {
     ScrollView {
       LazyVStack(
         alignment: .leading,
-        spacing: DesignSystem.Spacings.small
+        spacing: DesignSystem.Spacings.small,
+        pinnedViews: [.sectionHeaders]
       ) {
         ForEach(
           Array(viewModels.enumerated()),
@@ -33,21 +34,26 @@ struct ShiftListView: View {
 
   @ViewBuilder
   private func sectionView(_ shiftsViewModel: ShiftsViewModel, sectionIndex: Int) -> some View {
-    Section {
-      Text(shiftsViewModel.day)
-        .font(DesignSystem.Fonts.header)
-        .foregroundColor(DesignSystem.Colors.header)
-    }
-    .padding(.vertical, DesignSystem.Spacings.xs)
-
-    ForEach(
-      Array(shiftsViewModel.shiftViewModels.enumerated()),
-      id: \.offset
-    ) { index, item in
-      itemView(item)
-        .onAppear { onItemAppear?(sectionIndex, index) }
-    }
-    .padding(.horizontal, DesignSystem.Spacings.xs)
+    Section(
+      content: {
+        ForEach(
+          Array(shiftsViewModel.shiftViewModels.enumerated()),
+          id: \.offset
+        ) { index, item in
+          itemView(item)
+            .onAppear { onItemAppear?(sectionIndex, index) }
+        }
+        .padding(.horizontal, DesignSystem.Spacings.xs)
+      },
+      header: {
+        Text(shiftsViewModel.day)
+          .frame(maxWidth: .infinity, alignment: .leading)
+          .padding(.vertical, DesignSystem.Spacings.xs)
+          .font(DesignSystem.Fonts.header)
+          .foregroundColor(DesignSystem.Colors.header)
+          .background(DesignSystem.Colors.background)
+      }
+    )
   }
 
   @ViewBuilder

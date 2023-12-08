@@ -23,7 +23,7 @@ class ShiftViewModel {
       title: jobModel.clientName,
       period: "\(shiftModel.startsAt.hour) - \(shiftModel.endsAt.hour)",
       earningsPerHour: shiftModel.earningsPerHour,
-      info: "\(category) • \(myLocation)"
+      info: category == nil ? myLocation : "\(category ?? "") • \(myLocation)"
     )
   }
 
