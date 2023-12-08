@@ -3,6 +3,7 @@
 //
 
 import UIKit
+import SwiftUI
 import JFoundation
 
 public class FindMatchRouter: RouterProtocol {
@@ -23,8 +24,7 @@ public class FindMatchRouter: RouterProtocol {
 
 private extension FindMatchRouter {
   func makeShiftsScreenViewController() -> UIViewController {
-    let viewController = UIViewController()
-    viewController.view.backgroundColor = .blue
+    let viewController = ShiftsViewController()
     return viewController
   }
 }

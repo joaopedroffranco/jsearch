@@ -7,6 +7,12 @@ import Foundation
 public extension Date {
   static var today: Date { Date() }
 
+  var string: String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    return formatter.string(from: self)
+  }
+
   var weekDay: String {
     let formatter = DateFormatter()
     formatter.dateFormat = "EEEE d MMMM"

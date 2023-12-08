@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import JFoundation
 
 enum TemperRequest: Requestable {
   case shifts(date: Date?)
@@ -21,7 +22,7 @@ enum TemperRequest: Requestable {
     switch self {
     case let .shifts(date):
       guard let date else { return nil }
-      return ["filter[date]": date.description]
+      return ["filter[date]": date.string]
     }
   }
 

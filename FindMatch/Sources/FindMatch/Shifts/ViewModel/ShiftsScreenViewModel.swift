@@ -7,14 +7,14 @@ import Combine
 import JData
 import JFoundation
 
-protocol ShiftsViewModelProtocol: AnyObject {
+protocol ShiftsScreenViewModelProtocol: AnyObject {
   var state: ShiftsState { get set }
 
-  func getTodayShifts()
+  func getTodayShifts(isPullRefreshing: Bool)
   func getFollowingShiftsIfNeeded(section: Int, index: Int)
 }
 
-class ShiftsScreenViewModel: ObservableObject, ShiftsViewModelProtocol {
+class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProtocol {
   @Published var state: ShiftsState = .initial
 
   private var shiftsRepository: ShiftsRepositoryProtocol
@@ -26,8 +26,8 @@ class ShiftsScreenViewModel: ObservableObject, ShiftsViewModelProtocol {
     self.shiftsRepository = shiftsRepository
   }
 
-  func getTodayShifts() {
-    state = .loading
+  func getTodayShifts(isPullRefreshing: Bool = false) {
+    if !isPullRefreshing { state = .loading }
 
     Task {
       let todayShiftsViewModel = await getShifts(from: currentDate)

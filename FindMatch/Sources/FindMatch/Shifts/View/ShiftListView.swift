@@ -26,8 +26,9 @@ struct ShiftListView: View {
           sectionView($0.element, sectionIndex: $0.offset)
         }
       }
+      .padding(.trailing, DesignSystem.Spacings.standard)
     }
-    .padding(.horizontal, DesignSystem.Spacings.standard)
+    .padding(.leading, DesignSystem.Spacings.standard)
   }
 
   @ViewBuilder

@@ -11,7 +11,7 @@ struct ShiftsScreen: View {
   var body: some View {
     mainView
       .onAppear { screenViewModel.getTodayShifts() }
-      .refreshable { screenViewModel.getTodayShifts() }
+      .refreshable { screenViewModel.getTodayShifts(isPullRefreshing: true) }
   }
 
   @ViewBuilder
