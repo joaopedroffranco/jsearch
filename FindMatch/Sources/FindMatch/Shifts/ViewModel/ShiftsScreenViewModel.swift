@@ -12,16 +12,23 @@ protocol ShiftsScreenViewModelProtocol: AnyObject {
 
   func getTodayShifts(isPullRefreshing: Bool)
   func getFollowingShiftsIfNeeded(section: Int, index: Int)
+
+  func goLogin()
+  func goSingUp()
+  func goFilters()
+  func goKaart()
 }
 
 class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProtocol {
-  @Published var state: ShiftsState = .initial
+  weak var parentRouter: FindMatchRouterDelegate?
 
-  private var shiftsRepository: ShiftsRepositoryProtocol
-  private let getFollowingThreshold = 2
+  @Published var state: ShiftsState = .initial
 
   var isLoadingFollowing = false
   var currentDate: Date = .today
+
+  private var shiftsRepository: ShiftsRepositoryProtocol
+  private let getFollowingThreshold = 2
 
   init(shiftsRepository: ShiftsRepositoryProtocol = ShiftsRepository()) {
     self.shiftsRepository = shiftsRepository
@@ -77,6 +84,27 @@ class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProtocol {
         }
       }
     }
+  }
+
+  func goLogin() {
+    parentRouter?.goLogin()
+  }
+
+  func goSingUp() {
+    parentRouter?.goSignUp()
+  }
+
+  func goFilters() {
+    parentRouter?.goFilters()
+  }
+
+  func goKaart() {
+    parentRouter?.goKaart()
+  }
+
+  deinit {
+    parentRouter?.dismiss()
+    parentRouter = nil
   }
 }
 

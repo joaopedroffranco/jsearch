@@ -5,5 +5,5 @@
 import Foundation
 
 public protocol RouterDelegate: AnyObject {
-  func onDismiss()
+  func dismiss()
 }

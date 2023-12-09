@@ -8,6 +8,7 @@ import JFoundation
 
 class MainRouter: RouterProtocol {
   weak var parentRouter: RouterDelegate?
+  var nextRouter: RouterProtocol?
   let navigationController: UINavigationController
 
   init(navigationController: UINavigationController) {
@@ -15,11 +16,11 @@ class MainRouter: RouterProtocol {
   }
 
   func start() {
-    let router = FindMatchRouter(parentRouter: self, navigationController: navigationController)
-    router.start()
+    nextRouter = FindMatchRouter(parentRouter: self, navigationController: navigationController)
+    nextRouter?.start()
   }
 }
 
 extension MainRouter: RouterDelegate {
-  func onDismiss() {}
+  func dismiss() {}
 }

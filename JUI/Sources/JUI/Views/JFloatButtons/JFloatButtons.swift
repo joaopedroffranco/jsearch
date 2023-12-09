@@ -45,7 +45,7 @@ public struct JFloatButtons: View {
   private func button(from button: JFloatButton) -> some View {
     HStack(spacing: DesignSystem.Spacings.xxs) {
       if let icon = button.icon {
-        Image(icon, bundle: button.bundle)
+        Image(icon, bundle: .module)
           .resizable()
           .frame(width: iconSize, height: iconSize)
           .foregroundColor(DesignSystem.Colors.secondary)
@@ -63,18 +63,18 @@ struct JFloatButtons_Previews: PreviewProvider {
   static var previews: some View {
     VStack(spacing: 50) {
       JFloatButtons(buttons: [
-        JFloatButton(icon: "filter", text: "Filters", bundle: .module),
+        JFloatButton(icon: "filter", text: "Filters"),
       ])
 
       JFloatButtons(buttons: [
-        JFloatButton(icon: "filter", text: "Filters", bundle: .module),
-        JFloatButton(icon: "map", text: "Kaart", bundle: .module)
+        JFloatButton(icon: "filter", text: "Filters"),
+        JFloatButton(icon: "map", text: "Kaart")
       ])
 
       JFloatButtons(buttons: [
-        JFloatButton(icon: "filter", text: "Filters", bundle: .module),
-        JFloatButton(icon: "map", text: "Kaart", bundle: .module),
-        JFloatButton(text: "Another", bundle: .module)
+        JFloatButton(icon: "filter", text: "Filters"),
+        JFloatButton(icon: "map", text: "Kaart"),
+        JFloatButton(text: "Another")
       ])
     }
     .frame(maxWidth: .infinity)

@@ -18,8 +18,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
   func testGetToday() {
     // given
     let todayModel = ShiftsModelStub.instance()
-    let repository = FakeShiftsRepository(with: todayModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: todayModel)
 
     // when
     screenViewModel.getTodayShifts()
@@ -37,8 +36,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
   func testGetTodayEmpty() {
     // given
     let emptyModel = ShiftsModelStub.instance(numberOfShifts: 0)
-    let repository = FakeShiftsRepository(with: emptyModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: emptyModel)
 
     // when
     screenViewModel.getTodayShifts()
@@ -49,9 +47,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
 
   func testGetTodayNil() {
     // given
-    let nilModel: ShiftsModelStub? = nil
-    let repository = FakeShiftsRepository(with: nilModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: nil)
 
     // when
     screenViewModel.getTodayShifts()
@@ -63,8 +59,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
   func testGetTodayPullToRefresh() {
     // given
     let todayModel = ShiftsModelStub.instance()
-    let repository = FakeShiftsRepository(with: todayModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: todayModel)
 
     // when
     screenViewModel.getTodayShifts(isPullRefreshing: true)
@@ -80,8 +75,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     // given
     let todayModel = ShiftsModelStub.instance()
     let followingModel = ShiftsModelStub.instance()
-    let repository = FakeShiftsRepository(with: followingModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: followingModel)
 
     guard let todayShiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: screenViewModel.currentDate) else {
       fail("Couldn't proceed with the test")
@@ -111,8 +105,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     // given
     let todayModel = ShiftsModelStub.instance()
     let followingModel = ShiftsModelStub.instance()
-    let repository = FakeShiftsRepository(with: followingModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: followingModel)
 
     guard let todayShiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: screenViewModel.currentDate) else {
       fail("Couldn't proceed with the test")
@@ -144,8 +137,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     // given
     let todayModel = ShiftsModelStub.instance()
     let followingModel = ShiftsModelStub.instance(numberOfShifts: 0)
-    let repository = FakeShiftsRepository(with: followingModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: followingModel)
 
     guard let todayShiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: screenViewModel.currentDate) else {
       fail("Couldn't proceed with the test")
@@ -168,8 +160,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     // given
     let todayModel = ShiftsModelStub.instance()
     let followingModel: ShiftsModelStub? = nil
-    let repository = FakeShiftsRepository(with: followingModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: followingModel)
 
     guard let todayShiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: screenViewModel.currentDate) else {
       fail("Couldn't proceed with the test")
@@ -192,8 +183,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     // given
     let todayModel = ShiftsModelStub.instance()
     let followingModel = ShiftsModelStub.instance()
-    let repository = FakeShiftsRepository(with: followingModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: followingModel)
 
     guard let todayShiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: screenViewModel.currentDate) else {
       fail("Couldn't proceed with the test")
@@ -216,8 +206,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     // given
     let todayModel = ShiftsModelStub.instance()
     let followingModel = ShiftsModelStub.instance()
-    let repository = FakeShiftsRepository(with: followingModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: followingModel)
 
     guard let todayShiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: screenViewModel.currentDate) else {
       fail("Couldn't proceed with the test")
@@ -240,8 +229,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     // given
     let todayModel = ShiftsModelStub.instance()
     let followingModel = ShiftsModelStub.instance()
-    let repository = FakeShiftsRepository(with: followingModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: followingModel)
 
     guard let todayShiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: screenViewModel.currentDate) else {
       fail("Couldn't proceed with the test")
@@ -260,8 +248,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     // given
     let todayModel = ShiftsModelStub.instance()
     let followingModel = ShiftsModelStub.instance()
-    let repository = FakeShiftsRepository(with: followingModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: followingModel)
 
     guard let shiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: screenViewModel.currentDate) else {
       fail("Couldn't proceed with the test")
@@ -287,8 +274,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     // given
     let todayModel = ShiftsModelStub.instance()
     let followingModel = ShiftsModelStub.instance()
-    let repository = FakeShiftsRepository(with: followingModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: followingModel)
 
     guard let shiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: screenViewModel.currentDate) else {
       fail("Couldn't proceed with the test")
@@ -315,8 +301,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     // given
     let todayModel = ShiftsModelStub.instance()
     let followingModel = ShiftsModelStub.instance()
-    let repository = FakeShiftsRepository(with: followingModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: followingModel)
 
     guard let shiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: screenViewModel.currentDate) else {
       fail("Couldn't proceed with the test")
@@ -343,8 +328,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     // given
     let todayModel = ShiftsModelStub.instance()
     let followingModel = ShiftsModelStub.instance()
-    let repository = FakeShiftsRepository(with: followingModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: followingModel)
 
     guard let shiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: screenViewModel.currentDate) else {
       fail("Couldn't proceed with the test")
@@ -370,8 +354,7 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     // given
     let todayModel = ShiftsModelStub.instance()
     let followingModel = ShiftsModelStub.instance()
-    let repository = FakeShiftsRepository(with: followingModel)
-    let screenViewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let screenViewModel = makeScreenViewModel(with: followingModel)
 
     guard let shiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: screenViewModel.currentDate) else {
       fail("Couldn't proceed with the test")
@@ -392,5 +375,71 @@ final class ShiftsScreenViewModelTests: XCTestCase {
 
     expect(screenViewModel.state).toNotEventually(equal(.loaded(viewModels: [shiftsViewModel, shiftsViewModel, expectedFollowingShiftsViewModel])))
     expect(screenViewModel.state).toEventually(equal(.loaded(viewModels: [shiftsViewModel, shiftsViewModel])))
+  }
+
+  // MARK: - Router
+
+  func testLogin() {
+    // given
+    let router = FakeFindMatchRouter()
+    let screenViewModel = makeScreenViewModel(router: router)
+
+    // when
+    expect(router.didLogin).to(beFalse())
+    screenViewModel.goLogin()
+
+    // then
+    expect(router.didLogin).to(beTrue())
+  }
+
+  func testSignUp() {
+    // given
+    let router = FakeFindMatchRouter()
+    let screenViewModel = makeScreenViewModel(router: router)
+
+    // when
+    expect(router.didSignUp).to(beFalse())
+    screenViewModel.goSingUp()
+
+    // then
+    expect(router.didSignUp).to(beTrue())
+  }
+
+  func testFilter() {
+    // given
+    let router = FakeFindMatchRouter()
+    let screenViewModel = makeScreenViewModel(router: router)
+
+    // when
+    expect(router.didFilter).to(beFalse())
+    screenViewModel.goFilters()
+
+    // then
+    expect(router.didFilter).to(beTrue())
+  }
+
+  func testKaart() {
+    // given
+    let router = FakeFindMatchRouter()
+    let screenViewModel = makeScreenViewModel(router: router)
+
+    // when
+    expect(router.didKaart).to(beFalse())
+    screenViewModel.goKaart()
+
+    // then
+    expect(router.didKaart).to(beTrue())
+  }
+}
+
+private extension ShiftsScreenViewModelTests {
+  func makeScreenViewModel(
+    with model: ShiftsModelStub? = .instance(),
+    router: FakeFindMatchRouter? = nil
+  ) -> ShiftsScreenViewModel {
+    let repository = FakeShiftsRepository(with: model)
+    let viewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    viewModel.parentRouter = router
+    return viewModel
   }
 }

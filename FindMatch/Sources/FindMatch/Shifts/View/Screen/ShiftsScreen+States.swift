@@ -19,8 +19,9 @@ extension ShiftsScreen {
   }
 
   var errorView: some View {
-    Text("Error on getting shifts")
-      .padding()
+    JError(message: "We couldn't fetch the shifts for today.") {
+      screenViewModel.getTodayShifts()
+    }
   }
 
   func loadedView(viewModels: [ShiftsViewModel]) -> some View {
@@ -34,18 +35,18 @@ extension ShiftsScreen {
           JFloatButton(
             icon: DesignSystem.Icons.filter,
             text: "Filters",
-            action: nil
+            action: screenViewModel.goFilters
           ),
           JFloatButton(
             icon: DesignSystem.Icons.map,
             text: "Kaart",
-            action: nil
+            action: screenViewModel.goKaart
           )
         ])
 
         AuthenticationEntryPointView(
-          signUpAction: {},
-          loginAction: {}
+          signUpAction: screenViewModel.goLogin,
+          loginAction: screenViewModel.goSingUp
         )
       }
     }

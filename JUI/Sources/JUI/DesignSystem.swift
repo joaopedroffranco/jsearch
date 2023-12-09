@@ -53,5 +53,7 @@ public enum DesignSystem {
   public enum Icons {
     public static let filter = "filter"
     public static let map = "map"
+    public static let workers = "workers"
+    public static let warning = "warning"
   }
 }

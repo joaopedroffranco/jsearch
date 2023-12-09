@@ -9,17 +9,13 @@ public struct JFloatButton {
   let text: String
   let action: JButtonAction?
 
-  let bundle: Bundle
-
   public init(
     icon: String? = nil,
     text: String,
-    action: JButtonAction? = nil,
-    bundle: Bundle = .main
+    action: JButtonAction? = nil
   ) {
     self.icon = icon
     self.text = text
     self.action = action
-    self.bundle = bundle
   }
 }
