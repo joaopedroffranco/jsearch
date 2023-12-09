@@ -10,7 +10,7 @@ struct ShiftsScreen: View {
 
   var body: some View {
     mainView
-      .onAppear { screenViewModel.getTodayShifts() }
+      .onLoad { screenViewModel.getTodayShifts() }
       .refreshable { screenViewModel.getTodayShifts(isPullRefreshing: true) }
   }
 
