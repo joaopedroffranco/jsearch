@@ -5,21 +5,26 @@
 import UIKit
 import SwiftUI
 import JFoundation
+import FindMatch
 
-public class FindMatchRouter: RouterProtocol {
-  public weak var parentRouter: RouterDelegate?
+class FindMatchRouter: RouterProtocol {
+  public weak var parentRouter: RouterProtocol?
   public var nextRouter: RouterProtocol?
 
   let navigationController: UINavigationController
 
-  public init(parentRouter: RouterDelegate?, navigationController: UINavigationController) {
+  init(parentRouter: RouterProtocol?, navigationController: UINavigationController) {
     self.parentRouter = parentRouter
     self.navigationController = navigationController
   }
 
-  public func start() {
+  func start() {
     let viewController = makeShiftsScreenViewController()
     navigationController.setViewControllers([viewController], animated: false)
+  }
+
+  deinit {
+    clean()
   }
 }
 
@@ -34,13 +39,26 @@ extension FindMatchRouter: FindMatchRouterDelegate {
     navigationController.pushViewController(viewController, animated: true)
   }
 
-  func goLogin() {}
+  func goLogin() {
+    nextRouter = AuthenticationRouter(
+      dataSource: .login,
+      parentRouter: self,
+      navigationController: navigationController
+    )
+    nextRouter?.start()
+  }
 
-  func goSignUp() {}
+  func goSignUp() {
+    nextRouter = AuthenticationRouter(
+      dataSource: .signup,
+      parentRouter: self,
+      navigationController: navigationController
+    )
+    nextRouter?.start()
+  }
 
-  public func dismiss() {
+  func dismiss() {
     navigationController.topViewController?.dismiss(animated: true)
-    nextRouter = nil
     parentRouter = nil
   }
 }
@@ -48,7 +66,7 @@ extension FindMatchRouter: FindMatchRouterDelegate {
 private extension FindMatchRouter {
   func makeShiftsScreenViewController() -> UIViewController {
     let viewModel = ShiftsScreenViewModel()
-    viewModel.parentRouter = self
+    viewModel.routerDelegate = self
 
     let viewController = ShiftsViewController(viewModel: viewModel)
     return viewController

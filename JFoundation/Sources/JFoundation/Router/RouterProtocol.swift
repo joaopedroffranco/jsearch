@@ -7,10 +7,23 @@
 
 import UIKit
 
-public protocol RouterProtocol: AnyObject {
+public protocol RouterProtocol: RouterDelegate {
   /// weak reference
-  var parentRouter: RouterDelegate? { get }
-  var nextRouter: RouterProtocol? { get }
+  var parentRouter: RouterProtocol? { get set }
+  var nextRouter: RouterProtocol? { get set }
 
   func start()
+  func childRouterDidDismiss()
+}
+
+public extension RouterProtocol {
+  func clean() {
+    parentRouter?.childRouterDidDismiss()
+    parentRouter = nil
+    nextRouter = nil
+  }
+
+  func childRouterDidDismiss() {
+    nextRouter = nil
+  }
 }

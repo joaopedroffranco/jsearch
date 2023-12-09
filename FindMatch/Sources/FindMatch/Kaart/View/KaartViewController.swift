@@ -5,8 +5,8 @@
 import UIKit
 import SwiftUI
 
-class KaartViewController: UIHostingController<KaartScreen> {
-  init() {
+public class KaartViewController: UIHostingController<KaartScreen> {
+  public init() {
     let kaartScreen = KaartScreen()
     super.init(rootView: kaartScreen)
     navigationItem.title = "Kaart"

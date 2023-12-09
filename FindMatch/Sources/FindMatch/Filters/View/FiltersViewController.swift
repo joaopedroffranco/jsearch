@@ -5,8 +5,8 @@
 import UIKit
 import SwiftUI
 
-class FiltersViewController: UIHostingController<FiltersScreen> {
-  init() {
+public class FiltersViewController: UIHostingController<FiltersScreen> {
+  public init() {
     let filtersScreen = FiltersScreen()
     super.init(rootView: filtersScreen)
     navigationItem.title = "Filters"

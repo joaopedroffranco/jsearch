@@ -5,7 +5,7 @@
 import Foundation
 import JFoundation
 
-protocol FindMatchRouterDelegate: RouterDelegate {
+public protocol FindMatchRouterDelegate: RouterDelegate {
   func goFilters()
   func goKaart()
   func goLogin()

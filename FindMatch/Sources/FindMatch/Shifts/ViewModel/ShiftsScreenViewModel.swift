@@ -19,8 +19,8 @@ protocol ShiftsScreenViewModelProtocol: AnyObject {
   func goKaart()
 }
 
-class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProtocol {
-  weak var parentRouter: FindMatchRouterDelegate?
+public class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProtocol {
+  public weak var routerDelegate: FindMatchRouterDelegate?
 
   @Published var state: ShiftsState = .initial
 
@@ -30,7 +30,7 @@ class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProtocol {
   private var shiftsRepository: ShiftsRepositoryProtocol
   private let getFollowingThreshold = 2
 
-  init(shiftsRepository: ShiftsRepositoryProtocol = ShiftsRepository()) {
+  public init(shiftsRepository: ShiftsRepositoryProtocol = ShiftsRepository()) {
     self.shiftsRepository = shiftsRepository
   }
 
@@ -87,24 +87,24 @@ class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProtocol {
   }
 
   func goLogin() {
-    parentRouter?.goLogin()
+    routerDelegate?.goLogin()
   }
 
   func goSingUp() {
-    parentRouter?.goSignUp()
+    routerDelegate?.goSignUp()
   }
 
   func goFilters() {
-    parentRouter?.goFilters()
+    routerDelegate?.goFilters()
   }
 
   func goKaart() {
-    parentRouter?.goKaart()
+    routerDelegate?.goKaart()
   }
 
   deinit {
-    parentRouter?.dismiss()
-    parentRouter = nil
+    routerDelegate?.dismiss()
+    routerDelegate = nil
   }
 }
 

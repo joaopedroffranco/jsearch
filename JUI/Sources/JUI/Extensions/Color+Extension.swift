@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 /// Specific colors
 extension Color {
@@ -11,4 +12,8 @@ extension Color {
   static let jGray = Color(red: 195/255, green: 195/255, blue: 195/255)
   static let jPurple = Color(red: 105/255, green: 50/255, blue: 223/255)
   static let jGreen = Color(red: 130/255, green: 251/255, blue: 152/255)
+}
+
+public extension Color {
+  var uiColor: UIColor { UIColor(self) }
 }

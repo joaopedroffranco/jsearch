@@ -439,7 +439,7 @@ private extension ShiftsScreenViewModelTests {
   ) -> ShiftsScreenViewModel {
     let repository = FakeShiftsRepository(with: model)
     let viewModel = ShiftsScreenViewModel(shiftsRepository: repository)
-    viewModel.parentRouter = router
+    viewModel.routerDelegate = router
     return viewModel
   }
 }

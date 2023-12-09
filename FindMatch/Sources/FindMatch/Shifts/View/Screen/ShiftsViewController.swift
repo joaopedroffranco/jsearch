@@ -5,8 +5,8 @@
 import UIKit
 import SwiftUI
 
-class ShiftsViewController: UIHostingController<ShiftsScreen> {
-  init(viewModel: ShiftsScreenViewModel = ShiftsScreenViewModel()) {
+public class ShiftsViewController: UIHostingController<ShiftsScreen> {
+  public init(viewModel: ShiftsScreenViewModel = ShiftsScreenViewModel()) {
     let shiftsScreen = ShiftsScreen(screenViewModel: viewModel)
     super.init(rootView: shiftsScreen)
     navigationItem.title = "Jobs"

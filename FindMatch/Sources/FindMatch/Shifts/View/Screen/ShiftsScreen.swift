@@ -5,10 +5,10 @@
 import SwiftUI
 import JUI
 
-struct ShiftsScreen: View {
+public struct ShiftsScreen: View {
   @ObservedObject var screenViewModel: ShiftsScreenViewModel
 
-  var body: some View {
+  public var body: some View {
     mainView
       .onLoad { screenViewModel.getTodayShifts() }
       .refreshable { screenViewModel.getTodayShifts(isPullRefreshing: true) }

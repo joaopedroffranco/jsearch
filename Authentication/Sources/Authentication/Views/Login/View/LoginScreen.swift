@@ -5,15 +5,15 @@
 import SwiftUI
 import JUI
 
-public struct FiltersScreen: View {
+public struct LoginScreen: View {
   public var body: some View {
-    JWIP(title: "Filters")
+    JWIP(title: "Login")
       .background(DesignSystem.Colors.background)
   }
 }
 
-struct FiltersScreen_Previews: PreviewProvider {
+struct LoginScreen_Previews: PreviewProvider {
   static var previews: some View {
-    FiltersScreen()
+    LoginScreen()
   }
 }

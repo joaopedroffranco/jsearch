@@ -6,11 +6,20 @@ import SwiftUI
 
 public struct JWIP: View {
   let title: String
+  let buttonText: String?
+  let buttonAction: JButtonAction?
 
   private let iconSize: CGFloat = 70
 
-  public init(title: String) {
+  public init(
+    title: String,
+    buttonText: String? = nil,
+    buttonAction: JButtonAction? = nil
+  ) {
     self.title = title
+    self.buttonText = buttonText
+    self.buttonAction = buttonAction
+
   }
 
   public var body: some View {
@@ -28,6 +37,12 @@ public struct JWIP: View {
         .font(DesignSystem.Fonts.description)
         .foregroundColor(DesignSystem.Colors.description)
         .padding(.horizontal, DesignSystem.Spacings.medium)
+
+      if let buttonAction, let buttonText {
+        JButton(text: buttonText, type: .secondary, action: buttonAction)
+          .frame(width: 100, height: 40)
+          .padding(.top, DesignSystem.Spacings.medium)
+      }
     }
     .frame(alignment: .center)
   }
@@ -35,6 +50,6 @@ public struct JWIP: View {
 
 struct JWIP_Previews: PreviewProvider {
   static var previews: some View {
-    JWIP(title: "Filter")
+    JWIP(title: "Feature", buttonText: "Action") {}
   }
 }

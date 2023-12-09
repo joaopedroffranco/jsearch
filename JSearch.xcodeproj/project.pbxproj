@@ -12,6 +12,9 @@
 		9C08CAE32B23850800D97C28 /* JData in Frameworks */ = {isa = PBXBuildFile; productRef = 9C08CAE22B23850800D97C28 /* JData */; };
 		9C08CAE52B23850800D97C28 /* JFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 9C08CAE42B23850800D97C28 /* JFoundation */; };
 		9C08CAE72B23850800D97C28 /* JUI in Frameworks */ = {isa = PBXBuildFile; productRef = 9C08CAE62B23850800D97C28 /* JUI */; };
+		9C3B01912B24D03D0092AC8F /* FindMatchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B01902B24D03D0092AC8F /* FindMatchRouter.swift */; };
+		9C3B01932B25057B0092AC8F /* AuthenticationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3B01922B25057B0092AC8F /* AuthenticationRouter.swift */; };
+		9C3B01952B2506210092AC8F /* Authentication in Frameworks */ = {isa = PBXBuildFile; productRef = 9C3B01942B2506210092AC8F /* Authentication */; };
 		9C3CF47C2B1CD9840082B646 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3CF47B2B1CD9840082B646 /* AppDelegate.swift */; };
 		9C3CF4852B1CD9850082B646 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C3CF4842B1CD9850082B646 /* Assets.xcassets */; };
 		9C3CF4882B1CD9850082B646 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C3CF4862B1CD9850082B646 /* LaunchScreen.storyboard */; };
@@ -37,6 +40,8 @@
 
 /* Begin PBXFileReference section */
 		9C08CADE2B2384E300D97C28 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
+		9C3B01902B24D03D0092AC8F /* FindMatchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMatchRouter.swift; sourceTree = "<group>"; };
+		9C3B01922B25057B0092AC8F /* AuthenticationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationRouter.swift; sourceTree = "<group>"; };
 		9C3CF4782B1CD9840082B646 /* JSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C3CF47B2B1CD9840082B646 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C3CF4842B1CD9850082B646 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -54,6 +59,7 @@
 			files = (
 				9C08CAE52B23850800D97C28 /* JFoundation in Frameworks */,
 				9C08CAE12B23850800D97C28 /* FindMatch in Frameworks */,
+				9C3B01952B2506210092AC8F /* Authentication in Frameworks */,
 				9C08CAE32B23850800D97C28 /* JData in Frameworks */,
 				9C08CAE72B23850800D97C28 /* JUI in Frameworks */,
 			);
@@ -76,12 +82,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9C08CADD2B2384D500D97C28 /* Router */ = {
+		9C08CADD2B2384D500D97C28 /* Routers */ = {
 			isa = PBXGroup;
 			children = (
+				9C3B01922B25057B0092AC8F /* AuthenticationRouter.swift */,
+				9C3B01902B24D03D0092AC8F /* FindMatchRouter.swift */,
 				9C08CADE2B2384E300D97C28 /* MainRouter.swift */,
 			);
-			path = Router;
+			path = Routers;
 			sourceTree = "<group>";
 		};
 		9C3CF46F2B1CD9840082B646 = {
@@ -107,7 +115,7 @@
 		9C3CF47A2B1CD9840082B646 /* JSearch */ = {
 			isa = PBXGroup;
 			children = (
-				9C08CADD2B2384D500D97C28 /* Router */,
+				9C08CADD2B2384D500D97C28 /* Routers */,
 				9C3CF47B2B1CD9840082B646 /* AppDelegate.swift */,
 				9C3CF4842B1CD9850082B646 /* Assets.xcassets */,
 				9C3CF4862B1CD9850082B646 /* LaunchScreen.storyboard */,
@@ -152,6 +160,7 @@
 				9C08CAE22B23850800D97C28 /* JData */,
 				9C08CAE42B23850800D97C28 /* JFoundation */,
 				9C08CAE62B23850800D97C28 /* JUI */,
+				9C3B01942B2506210092AC8F /* Authentication */,
 			);
 			productName = JSearch;
 			productReference = 9C3CF4782B1CD9840082B646 /* JSearch.app */;
@@ -269,6 +278,8 @@
 			files = (
 				9C3CF47C2B1CD9840082B646 /* AppDelegate.swift in Sources */,
 				9C08CADF2B2384E300D97C28 /* MainRouter.swift in Sources */,
+				9C3B01932B25057B0092AC8F /* AuthenticationRouter.swift in Sources */,
+				9C3B01912B24D03D0092AC8F /* FindMatchRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,8 +450,8 @@
 				INFOPLIST_FILE = JSearch/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -469,8 +480,8 @@
 				INFOPLIST_FILE = JSearch/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -617,6 +628,10 @@
 		9C08CAE62B23850800D97C28 /* JUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = JUI;
+		};
+		9C3B01942B2506210092AC8F /* Authentication */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Authentication;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -5,8 +5,8 @@
 import SwiftUI
 import JUI
 
-struct KaartScreen: View {
-  var body: some View {
+public struct KaartScreen: View {
+  public var body: some View {
     JWIP(title: "Kaart")
       .background(DesignSystem.Colors.background)
   }

@@ -45,8 +45,8 @@ extension ShiftsScreen {
         ])
 
         AuthenticationEntryPointView(
-          signUpAction: screenViewModel.goLogin,
-          loginAction: screenViewModel.goSingUp
+          signUpAction: screenViewModel.goSingUp,
+          loginAction: screenViewModel.goLogin
         )
       }
     }
