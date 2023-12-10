@@ -7,7 +7,7 @@ import JUI
 import JData
 import CoreLocation
 
-class ShiftViewModel {
+struct ShiftViewModel {
   var id: String
   var image: ImageType
   var title: String
@@ -15,7 +15,7 @@ class ShiftViewModel {
   var earningsPerHour: String
   var info: String
 
-  convenience init(shiftModel: ShiftModel, currentLocation: CLLocation?) {
+  init(shiftModel: ShiftModel, currentLocation: CLLocation?) {
     let jobModel = shiftModel.job
     let category = jobModel.category
 
@@ -64,6 +64,7 @@ extension ShiftViewModel: Hashable {
   }
 
   static func == (lhs: ShiftViewModel, rhs: ShiftViewModel) -> Bool {
+    lhs.id == rhs.id &&
     lhs.title == rhs.title &&
     lhs.period == rhs.period &&
     lhs.image == rhs.image &&

@@ -48,7 +48,6 @@ struct JButton_Previews: PreviewProvider {
   static var previews: some View {
     HStack(spacing: 8) {
       JButton(text: "Primary Button", type: .primary)
-
       JButton(text: "Secondary Button", type: .secondary)
     }
     .padding(.horizontal)

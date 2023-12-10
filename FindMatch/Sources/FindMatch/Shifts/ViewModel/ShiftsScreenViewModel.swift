@@ -41,6 +41,9 @@ public class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProto
     self.locationManager.delegate = self
   }
 
+
+  // MARK: - Get Shifts
+
   func getTodayShifts(isPullRefreshing: Bool = false) {
     if isPullRefreshing {
       reset()
@@ -95,6 +98,8 @@ public class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProto
     }
   }
 
+  // MARK: - Router
+
   func goLogin() {
     routerDelegate?.goLogin()
   }
@@ -117,11 +122,15 @@ public class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProto
   }
 }
 
+// MARK: - Location Delegate
+
 extension ShiftsScreenViewModel: LocationDelegate {
   public func didChangeAuthorizationStatus() {
     getTodayShifts()
   }
 }
+
+// MARK: - Private
 
 private extension ShiftsScreenViewModel {
   func getShifts(from date: Date) -> AnyPublisher<ShiftsViewModel?, Never> {

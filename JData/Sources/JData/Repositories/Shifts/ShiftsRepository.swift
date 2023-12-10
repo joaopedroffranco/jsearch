@@ -6,8 +6,10 @@ import Foundation
 import Combine
 import JFoundation
 
+public typealias ShiftsPublisher = AnyPublisher<ShiftsModel?, Never>
+
 public protocol ShiftsRepositoryProtocol: AnyObject {
-  func getShifts(for date: Date?) -> Future<ShiftsModel?, Never>
+  func getShifts(for date: Date?) -> ShiftsPublisher
 }
 
 public class ShiftsRepository: ShiftsRepositoryProtocol {
@@ -24,20 +26,21 @@ public class ShiftsRepository: ShiftsRepositoryProtocol {
     self.logger = logger
   }
 
-  public func getShifts(for date: Date?) -> Future<ShiftsModel?, Never> {
+  public func getShifts(for date: Date?) -> ShiftsPublisher {
     Future { promise in
       self.cancellable = self.dataSource
         .fetch(request: TemperRequest.shifts(date: date), dataType: ShiftsResponse.self)
-        .sink { completion in
-          switch completion {
-          case let .failure(error):
-            self.logger.log(topic: "Shifts Repository", message: error.localizedDescription)
-            promise(.success(nil))
-          default: break
-          }
-        } receiveValue: { shifts in
-          promise(.success(shifts))
-        }
-    }
+        .sink(
+          receiveCompletion: { completion in
+            switch completion {
+            case .failure:
+              self.logger.log(topic: "Shifts Repository", message: "The fetch failed")
+              promise(.success(nil))
+            default: break
+            }
+          },
+          receiveValue: { shifts in promise(.success(shifts)) }
+        )
+    }.eraseToAnyPublisher()
   }
 }

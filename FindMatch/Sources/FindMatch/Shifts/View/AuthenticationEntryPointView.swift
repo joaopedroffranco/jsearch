@@ -24,7 +24,7 @@ struct AuthenticationEntryPointView: View {
       )
     }
     .padding(.horizontal, DesignSystem.Spacings.xxs)
-    .frame(height: 50)
+    .frame(height: 45)
     .padding(.vertical, DesignSystem.Spacings.small)
     .background(DesignSystem.Colors.background)
   }

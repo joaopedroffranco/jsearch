@@ -33,6 +33,6 @@ public enum JButtonType {
   }
 
   var cornerRadius: CGFloat {
-    DesignSystem.Radius.medium
+    DesignSystem.Radius.large
   }
 }

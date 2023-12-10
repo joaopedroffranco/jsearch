@@ -12,33 +12,24 @@ public protocol JSONFileProtocol {
 
 public class FakeDataSource: RemoteDataSourceProtocol {
   let jsonFile: JSONFileProtocol
-  public var didPost: Bool = false
 
   init(jsonFile: JSONFileProtocol) {
     self.jsonFile = jsonFile
   }
 
-  public func fetch<T>(request: Requestable, dataType: T.Type) -> Future<T, RemoteError> where T : Decodable {
-    Future { promise in
-      guard
-        let data = self.get(file: self.jsonFile),
-        let response = try? JSONDecoder().decode(dataType.self, from: data)
-      else {
-        promise(.failure(RemoteError.invalidRequest))
-        return
-      }
-
-      promise(.success(response))
+  public func fetch<T>(request: Requestable, dataType: T.Type) -> RemotePublisher<T> where T: Decodable {
+    guard
+      let data = get(file: self.jsonFile),
+      let response = try? JSONDecoder().decode(dataType.self, from: data)
+    else {
+      return Fail(error: RemoteError.invalidRequest).eraseToAnyPublisher()
     }
-  }
 
-  public func post(request: Requestable) async throws {
-    didPost = true
+    return Just(response).setFailureType(to: RemoteError.self).eraseToAnyPublisher()
   }
 
   private func get(file: JSONFileProtocol) -> Data? {
-    let bundle = Bundle.module
-    guard let url = bundle.url(
+    guard let url = Bundle.module.url(
       forResource: file.name,
       withExtension: "json"
     ) else {

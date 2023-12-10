@@ -19,7 +19,7 @@ public struct JTile: View {
     info: String,
     description: String,
     tag: String,
-    height: CGFloat = 200
+    height: CGFloat = 220
   ) {
     self.imageType = imageType
     self.title = title
@@ -34,7 +34,6 @@ public struct JTile: View {
       ZStack(alignment: .bottomTrailing) {
         imageView
           .frame(height: height)
-          .frame(maxWidth: .infinity)
 
         Text(tag)
           .padding(.leading, DesignSystem.Spacings.xs)
@@ -44,9 +43,9 @@ public struct JTile: View {
           .foregroundColor(DesignSystem.Colors.secondary)
       }
       .background(Color.blue)
-      .cornerRadius(DesignSystem.Radius.medium)
+      .cornerRadius(DesignSystem.Radius.large)
 
-      VStack(alignment: .leading, spacing: DesignSystem.Spacings.xxs) {
+      VStack(alignment: .leading, spacing: DesignSystem.Spacings.xxxs) {
         Text(info)
           .font(DesignSystem.Fonts.info)
           .foregroundColor(DesignSystem.Colors.info)
@@ -68,25 +67,23 @@ public struct JTile: View {
   @ViewBuilder
   private var imageView: some View {
     switch imageType {
-    case let .local(name, bundle):
-      Image(name, bundle: bundle)
+    case let .local(name):
+      Image(name, bundle: .module)
         .resizable()
-        .scaledToFill()
     case let .remote(url):
       KFImage(url)
         .memoryCacheExpiration(.expired)
         .diskCacheExpiration(.expired)
         .resizable()
-        .scaledToFill()
     }
   }
 }
 
 struct JTile_Previews: PreviewProvider {
   static var previews: some View {
-    VStack(spacing: 50) {
+    VStack(spacing: 30) {
       JTile(
-        imageType: .local(name: "tile_placeholder", bundle: .module),
+        imageType: .local(name: "tile_placeholder"),
         title: "This is the title with local image",
         info: "This is the info",
         description: "This is the description",
@@ -94,7 +91,7 @@ struct JTile_Previews: PreviewProvider {
       )
 
       JTile(
-        imageType: .local(name: "tile_placeholder", bundle: .module),
+        imageType: .local(name: "tile_placeholder"),
         title: "This is the title with custom height",
         info: "This is the info",
         description: "This is the description",

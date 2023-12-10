@@ -28,28 +28,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9C3CF48D2B1CD9850082B646"
-               BuildableName = "JSearchTests.xctest"
-               BlueprintName = "JSearchTests"
-               ReferencedContainer = "container:JSearch.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9C3CF4972B1CD9850082B646"
-               BuildableName = "JSearchUITests.xctest"
-               BlueprintName = "JSearchUITests"
-               ReferencedContainer = "container:JSearch.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

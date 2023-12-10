@@ -6,7 +6,7 @@ import SwiftUI
 
 public enum DesignSystem {
   public enum Colors {
-    public static let header = Color.jBlack
+    public static let header = Color.jBlack.opacity(0.9)
     public static let title = Color.jBlack
     public static let info = Color.jPurple
     public static let description = Color.jDarkGray

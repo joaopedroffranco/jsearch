@@ -11,13 +11,13 @@ typealias ItemOnAppear = (Int, Int) -> Void
 
 struct ShiftListView: View {
   var viewModels: [ShiftsViewModel]
-  var onItemAppear: ItemOnAppear?
+  var onItemAppear: ItemOnAppear? = nil
 
   var body: some View {
     ScrollView {
       LazyVStack(
         alignment: .leading,
-        spacing: DesignSystem.Spacings.small,
+        spacing: .zero,
         pinnedViews: [.sectionHeaders]
       ) {
         ForEach(
@@ -41,6 +41,7 @@ struct ShiftListView: View {
           id: \.element.hashValue
         ) { index, item in
           itemView(item)
+            .padding(.bottom, DesignSystem.Spacings.small)
             .onAppear { onItemAppear?(sectionIndex, index) }
         }
         .padding(.horizontal, DesignSystem.Spacings.xs)
@@ -48,7 +49,7 @@ struct ShiftListView: View {
       header: {
         Text(shiftsViewModel.day)
           .frame(maxWidth: .infinity, alignment: .leading)
-          .padding(.vertical, DesignSystem.Spacings.xs)
+          .padding(.vertical, DesignSystem.Spacings.medium)
           .font(DesignSystem.Fonts.header)
           .foregroundColor(DesignSystem.Colors.header)
           .background(DesignSystem.Colors.background)
@@ -71,8 +72,7 @@ struct ShiftListView: View {
 struct ShiftListView_Previews: PreviewProvider {
   static var previews: some View {
     ShiftListView(
-      viewModels: [ShiftsScreenPreviewModel.shiftsViewModel()],
-      onItemAppear: nil
+      viewModels: [ShiftsScreenPreviewModel.shiftsViewModel()]
     )
   }
 }

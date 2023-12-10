@@ -14,7 +14,7 @@ class FakeShiftsRepository: ShiftsRepositoryProtocol {
     self.model = model
   }
 
-  func getShifts(for date: Date?) -> Future<ShiftsModel?, Never> {
-    Future { promise in promise(.success(self.model)) }
+  func getShifts(for date: Date?) -> ShiftsPublisher {
+    Just(model).eraseToAnyPublisher()
   }
 }

@@ -23,28 +23,31 @@ public class URLSessionDataSource: RemoteDataSourceProtocol {
     self.decoder = decoder
   }
 
-  public func fetch<T>(request: Requestable, dataType: T.Type) -> Future<T, RemoteError> where T: Decodable {
-    Future { promise in
-      guard let request = request.request else {
-        promise(.failure(RemoteError.invalidRequest))
-        return
-      }
-
-      self.cancellable = self.session
-        .dataTaskPublisher(for: request)
-        .map(\.data)
-        .decode(type: dataType, decoder: self.decoder)
-        .sink(
-          receiveCompletion: { completion in
-            switch completion {
-            case .failure: promise(.failure(RemoteError.requestFailed))
-            default: break
-            }
-          },
-          receiveValue: { decodable in
-            promise(.success(decodable))
-          }
-        )
+  public func fetch<T>(request: Requestable, dataType: T.Type) -> RemotePublisher<T> where T: Decodable {
+    let subject = PassthroughSubject<T, RemoteError>()
+    guard let request = request.request else {
+      logger.log(topic: "URL Session", message: "Invalid request")
+      return Fail<T, RemoteError>(error: RemoteError.invalidRequest).eraseToAnyPublisher()
     }
+
+    cancellable = session
+      .dataTaskPublisher(for: request)
+      .map(\.data)
+      .decode(type: dataType, decoder: self.decoder)
+      .sink(
+        receiveCompletion: { completion in
+          switch completion {
+          case .failure:
+            self.logger.log(topic: "URL Session", message: "Couldn't decode the response")
+            return subject.send(completion: .failure(.invalidRequest))
+          default: break
+          }
+        },
+        receiveValue: { decodable in
+          subject.send(decodable)
+        }
+      )
+
+    return subject.eraseToAnyPublisher()
   }
 }
