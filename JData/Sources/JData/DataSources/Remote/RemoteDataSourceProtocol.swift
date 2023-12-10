@@ -3,8 +3,8 @@
 //
 
 import Foundation
+import Combine
 
 public protocol RemoteDataSourceProtocol: AnyObject {
-  func fetch<T: Decodable>(request: Requestable) async throws -> T
-  func post(request: Requestable) async throws
+  func fetch<T: Decodable>(request: Requestable, dataType: T.Type) -> AnyPublisher<T, RemoteError>
 }

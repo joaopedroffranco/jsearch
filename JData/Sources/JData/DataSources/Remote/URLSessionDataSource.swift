@@ -3,44 +3,49 @@
 //
 
 import Foundation
+import Combine
 import JFoundation
 
 public class URLSessionDataSource: RemoteDataSourceProtocol {
   let session: URLSession
+  let decoder: JSONDecoder
   let logger: LoggerProtocol
 
-  public init(session: URLSession = .shared, logger: LoggerProtocol = Logger()) {
+  private var cancellable: AnyCancellable?
+
+  public init(
+    session: URLSession = .shared,
+    logger: LoggerProtocol = Logger(),
+    decoder: JSONDecoder = JSONDecoder()
+  ) {
     self.session = session
     self.logger = logger
+    self.decoder = decoder
   }
 
-  public func fetch<T>(request: Requestable) async throws -> T where T: Decodable {
+  public func fetch<T>(request: Requestable, dataType: T.Type) -> AnyPublisher<T, RemoteError> where T : Decodable {
+    let subject = PassthroughSubject<T, RemoteError>()
     guard let request = request.request else {
-      throw RemoteError.invalidRequest
+      subject.send(completion: .failure(.invalidRequest))
+      return subject.eraseToAnyPublisher()
     }
 
-    let (data, _) = try await session.data(for: request)
-    let decoder = JSONDecoder()
+    cancellable = session
+      .dataTaskPublisher(for: request)
+      .map(\.data)
+      .decode(type: dataType, decoder: decoder)
+      .sink(
+        receiveCompletion: { completion in
+          switch completion {
+          case .failure: subject.send(completion: .failure(.requestFailed))
+          default: break
+          }
+        },
+        receiveValue: { decodable in
+          subject.send(decodable)
+        }
+      )
 
-    do {
-      return try decoder.decode(T.self, from: data)
-    } catch {
-      logger.log(topic: "Data Source", message: error.localizedDescription)
-      throw RemoteError.decodeError
-    }
-  }
-
-  public func post(request: Requestable) async throws {
-    guard let request = request.request else {
-      throw RemoteError.invalidRequest
-    }
-
-    do {
-      let (data, _) = try await session.data(for: request)
-      if data.isEmpty { throw RemoteError.requestFailed }
-    } catch {
-      logger.log(topic: "Data Source", message: error.localizedDescription)
-      throw RemoteError.requestFailed
-    }
+    return subject.eraseToAnyPublisher()
   }
 }

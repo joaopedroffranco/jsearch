@@ -30,6 +30,7 @@ public class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProto
   private var shiftsRepository: ShiftsRepositoryProtocol
   private var locationManager: LocationProtocol
   private let getFollowingThreshold = 2
+  private var cancellables = Set<AnyCancellable>()
 
   public init(
     shiftsRepository: ShiftsRepositoryProtocol = ShiftsRepository(),
@@ -49,16 +50,16 @@ public class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProto
 
     guard locationManager.currentStatus != .requesting else { return }
 
-    Task {
-      let todayShiftsViewModel = await getShifts(from: currentDate)
-      Task { @MainActor in
+    getShifts(from: currentDate)
+      .receive(on: RunLoop.main)
+      .sink { todayShiftsViewModel in
         if let todayShiftsViewModel {
-          state = .loaded(viewModels: [todayShiftsViewModel])
+          self.state = .loaded(viewModels: [todayShiftsViewModel])
         } else {
-          state = .error
+          self.state = .error
         }
       }
-    }
+      .store(in: &cancellables)
   }
 
   func getFollowingShiftsIfNeeded(section: Int, index: Int) {
@@ -79,17 +80,17 @@ public class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProto
   func getFollowingShifts() {
     if case let .loaded(viewModels) = state, let followingDate = currentDate.following(), !isLoadingFollowing {
       isLoadingFollowing = true
-      Task {
-        let followingShiftsViewModel = await getShifts(from: followingDate)
-        Task { @MainActor in
+      getShifts(from: followingDate)
+        .receive(on: RunLoop.main)
+        .sink { followingShiftsViewModel in
           if let followingShiftsViewModel {
             let newViewModels = viewModels + [followingShiftsViewModel]
-            state = .loaded(viewModels: newViewModels)
-            currentDate = followingDate
+            self.state = .loaded(viewModels: newViewModels)
+            self.currentDate = followingDate
           }
-          isLoadingFollowing = false
+          self.isLoadingFollowing = false
         }
-      }
+        .store(in: &cancellables)
     }
   }
 
@@ -122,9 +123,11 @@ extension ShiftsScreenViewModel: LocationDelegate {
 }
 
 private extension ShiftsScreenViewModel {
-  func getShifts(from date: Date) async -> ShiftsViewModel? {
-    let shiftsModel = await shiftsRepository.getShifts(for: date)
-    return viewModel(from: shiftsModel, date: date)
+  func getShifts(from date: Date) -> AnyPublisher<ShiftsViewModel?, Never> {
+    shiftsRepository
+      .getShifts(for: date)
+      .map { self.viewModel(from: $0, date: date) }
+      .eraseToAnyPublisher()
   }
 
   func viewModel(from model: ShiftsModel?, date: Date) -> ShiftsViewModel? {
