@@ -22,7 +22,7 @@ struct ShiftListView: View {
       ) {
         ForEach(
           Array(viewModels.enumerated()),
-          id: \.offset
+          id: \.element.hashValue
         ) {
           sectionView($0.element, sectionIndex: $0.offset)
         }
@@ -38,7 +38,7 @@ struct ShiftListView: View {
       content: {
         ForEach(
           Array(shiftsViewModel.shiftViewModels.enumerated()),
-          id: \.offset
+          id: \.element.hashValue
         ) { index, item in
           itemView(item)
             .onAppear { onItemAppear?(sectionIndex, index) }

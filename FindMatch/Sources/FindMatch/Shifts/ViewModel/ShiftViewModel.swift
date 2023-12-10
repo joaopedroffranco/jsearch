@@ -8,6 +8,7 @@ import JData
 import CoreLocation
 
 class ShiftViewModel {
+  var id: String
   var image: ImageType
   var title: String
   var period: String
@@ -31,6 +32,7 @@ class ShiftViewModel {
     }
 
     self.init(
+      id: shiftModel.id,
       image: .remote(url: jobModel.imageURL),
       title: jobModel.clientName,
       period: period,
@@ -40,12 +42,14 @@ class ShiftViewModel {
   }
 
   init(
+    id: String = UUID().description,
     image: ImageType,
     title: String,
     period: String,
     earningsPerHour: String,
     info: String
   ) {
+    self.id = id
     self.image = image
     self.title = title
     self.period = period
@@ -54,7 +58,11 @@ class ShiftViewModel {
   }
 }
 
-extension ShiftViewModel: Equatable {
+extension ShiftViewModel: Hashable {
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(id)
+  }
+
   static func == (lhs: ShiftViewModel, rhs: ShiftViewModel) -> Bool {
     lhs.title == rhs.title &&
     lhs.period == rhs.period &&

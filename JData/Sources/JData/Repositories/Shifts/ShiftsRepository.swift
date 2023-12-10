@@ -7,7 +7,7 @@ import Combine
 import JFoundation
 
 public protocol ShiftsRepositoryProtocol: AnyObject {
-  func getShifts(for date: Date?) -> AnyPublisher<ShiftsModel?, Never>
+  func getShifts(for date: Date?) -> Future<ShiftsModel?, Never>
 }
 
 public class ShiftsRepository: ShiftsRepositoryProtocol {
@@ -24,21 +24,20 @@ public class ShiftsRepository: ShiftsRepositoryProtocol {
     self.logger = logger
   }
 
-  public func getShifts(for date: Date?) -> AnyPublisher<ShiftsModel?, Never> {
-    let subject = PassthroughSubject<ShiftsModel?, Never>()
-    cancellable = dataSource
-      .fetch(request: TemperRequest.shifts(date: date), dataType: ShiftsResponse.self)
-      .sink { completion in
-        switch completion {
-        case let .failure(error):
-          self.logger.log(topic: "Shifts Repository", message: error.localizedDescription)
-          subject.send(nil)
-        default: break
+  public func getShifts(for date: Date?) -> Future<ShiftsModel?, Never> {
+    Future { promise in
+      self.cancellable = self.dataSource
+        .fetch(request: TemperRequest.shifts(date: date), dataType: ShiftsResponse.self)
+        .sink { completion in
+          switch completion {
+          case let .failure(error):
+            self.logger.log(topic: "Shifts Repository", message: error.localizedDescription)
+            promise(.success(nil))
+          default: break
+          }
+        } receiveValue: { shifts in
+          promise(.success(shifts))
         }
-      } receiveValue: { shifts in
-        subject.send(shifts)
-      }
-
-    return subject.eraseToAnyPublisher()
+    }
   }
 }

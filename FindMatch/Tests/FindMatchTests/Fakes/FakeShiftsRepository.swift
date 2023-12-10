@@ -4,6 +4,7 @@
 
 import Foundation
 import JData
+import Combine
 @testable import FindMatch
 
 class FakeShiftsRepository: ShiftsRepositoryProtocol {
@@ -13,5 +14,7 @@ class FakeShiftsRepository: ShiftsRepositoryProtocol {
     self.model = model
   }
 
-  func getShifts(for date: Date?) async -> ShiftsModel? { model }
+  func getShifts(for date: Date?) -> Future<ShiftsModel?, Never> {
+    Future { promise in promise(.success(self.model)) }
+  }
 }

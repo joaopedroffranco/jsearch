@@ -4,46 +4,62 @@
 
 import XCTest
 import Nimble
+import Combine
 @testable import JData
 
 final class ShiftsRepositoryTests: XCTestCase {
-  var repository: ShiftsRepository?
+  var cancellable: AnyCancellable?
 
-  func testRegularResponse() async {
+  func testRegularResponse() {
     // given
-    repository = ShiftsRepository(dataSource: FakeDataSource(jsonFile: JSONFile.shifts))
+    let repository = ShiftsRepository(dataSource: FakeDataSource(jsonFile: JSONFile.shifts))
 
     // when
-    let response = await repository?.getShifts(for: nil)
+    var expectedResponse: ShiftsModel?
+    repository.getShifts(for: nil)
+      .sink(receiveValue: { response in
+        expectedResponse = response
+      })
+      .cancel()
 
     // then
-    expect(response?.count).to(equal(3))
-    expect(response?.data.count).to(equal(3))
-    expect(response?.data).notTo(beNil())
+    expect(expectedResponse?.count).to(equal(3))
+    expect(expectedResponse?.data.count).to(equal(3))
+    expect(expectedResponse?.data).notTo(beNil())
   }
 
-  func testInvalidResponse() async {
+  func testInvalidResponse() {
     // given
-    repository = ShiftsRepository(dataSource: FakeDataSource(jsonFile: JSONFile.invalidShifts))
+    let repository = ShiftsRepository(dataSource: FakeDataSource(jsonFile: JSONFile.invalidShifts))
 
     // when
-    let response = await repository?.getShifts(for: nil)
+    var expectedResponse: ShiftsModel?
+    repository.getShifts(for: nil)
+      .sink(receiveValue: { response in
+        expectedResponse = response
+      })
+      .cancel()
 
     // then
-    expect(response?.count).to(beNil())
-    expect(response?.data.count).to(beNil())
-    expect(response?.data).to(beNil())
+    expect(expectedResponse?.count).to(beNil())
+    expect(expectedResponse?.data.count).to(beNil())
+    expect(expectedResponse?.data).to(beNil())
   }
 
-  func testEmptyResponse() async {
+  func testEmptyResponse() {
     // given
-    repository = ShiftsRepository(dataSource: FakeDataSource(jsonFile: JSONFile.emptyShifts))
+    let repository = ShiftsRepository(dataSource: FakeDataSource(jsonFile: JSONFile.emptyShifts))
 
     // when
-    let response = await repository?.getShifts(for: nil)
+    var expectedResponse: ShiftsModel?
+    repository.getShifts(for: nil)
+      .sink(receiveValue: { response in
+        expectedResponse = response
+      })
+      .cancel()
 
     // then
-    expect(response?.count).to(equal(0))
-    expect(response?.data).to(beEmpty())
+    expect(expectedResponse?.count).to(equal(0))
+    expect(expectedResponse?.data).to(beEmpty())
   }
 }

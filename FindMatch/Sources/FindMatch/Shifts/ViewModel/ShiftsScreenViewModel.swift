@@ -52,14 +52,14 @@ public class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProto
 
     getShifts(from: currentDate)
       .receive(on: RunLoop.main)
-      .sink { todayShiftsViewModel in
+      .map { todayShiftsViewModel -> ShiftsState in
         if let todayShiftsViewModel {
-          self.state = .loaded(viewModels: [todayShiftsViewModel])
+          return .loaded(viewModels: [todayShiftsViewModel])
         } else {
-          self.state = .error
+          return .error
         }
       }
-      .store(in: &cancellables)
+      .assign(to: &$state)
   }
 
   func getFollowingShiftsIfNeeded(section: Int, index: Int) {
@@ -82,14 +82,15 @@ public class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProto
       isLoadingFollowing = true
       getShifts(from: followingDate)
         .receive(on: RunLoop.main)
-        .sink { followingShiftsViewModel in
+        .sink(receiveCompletion: { _ in
+          self.isLoadingFollowing = false
+        }, receiveValue: { followingShiftsViewModel in
           if let followingShiftsViewModel {
             let newViewModels = viewModels + [followingShiftsViewModel]
             self.state = .loaded(viewModels: newViewModels)
             self.currentDate = followingDate
           }
-          self.isLoadingFollowing = false
-        }
+        })
         .store(in: &cancellables)
     }
   }

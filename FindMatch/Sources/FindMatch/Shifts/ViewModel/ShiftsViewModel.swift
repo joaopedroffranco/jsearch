@@ -23,7 +23,11 @@ class ShiftsViewModel {
   }
 }
 
-extension ShiftsViewModel: Equatable {
+extension ShiftsViewModel: Hashable {
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(day)
+  }
+
   static func == (lhs: ShiftsViewModel, rhs: ShiftsViewModel) -> Bool {
     lhs.day == rhs.day &&
     lhs.shiftViewModels == rhs.shiftViewModels

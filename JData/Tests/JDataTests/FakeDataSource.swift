@@ -3,11 +3,8 @@
 //
 
 import UIKit
+import Combine
 @testable import JData
-
-public enum FakeRemoteError: Error {
-  case invalidResponse
-}
 
 public protocol JSONFileProtocol {
   var name: String { get }
@@ -21,15 +18,18 @@ public class FakeDataSource: RemoteDataSourceProtocol {
     self.jsonFile = jsonFile
   }
 
-  public func fetch<T: Decodable>(request: Requestable) async throws -> T {
-    guard
-      let data = get(file: jsonFile),
-      let response = try? JSONDecoder().decode(T.self, from: data)
-    else {
-      throw FakeRemoteError.invalidResponse
-    }
+  public func fetch<T>(request: Requestable, dataType: T.Type) -> Future<T, RemoteError> where T : Decodable {
+    Future { promise in
+      guard
+        let data = self.get(file: self.jsonFile),
+        let response = try? JSONDecoder().decode(dataType.self, from: data)
+      else {
+        promise(.failure(RemoteError.invalidRequest))
+        return
+      }
 
-    return response
+      promise(.success(response))
+    }
   }
 
   public func post(request: Requestable) async throws {

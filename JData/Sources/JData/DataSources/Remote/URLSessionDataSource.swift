@@ -23,29 +23,28 @@ public class URLSessionDataSource: RemoteDataSourceProtocol {
     self.decoder = decoder
   }
 
-  public func fetch<T>(request: Requestable, dataType: T.Type) -> AnyPublisher<T, RemoteError> where T : Decodable {
-    let subject = PassthroughSubject<T, RemoteError>()
-    guard let request = request.request else {
-      subject.send(completion: .failure(.invalidRequest))
-      return subject.eraseToAnyPublisher()
-    }
+  public func fetch<T>(request: Requestable, dataType: T.Type) -> Future<T, RemoteError> where T: Decodable {
+    Future { promise in
+      guard let request = request.request else {
+        promise(.failure(RemoteError.invalidRequest))
+        return
+      }
 
-    cancellable = session
-      .dataTaskPublisher(for: request)
-      .map(\.data)
-      .decode(type: dataType, decoder: decoder)
-      .sink(
-        receiveCompletion: { completion in
-          switch completion {
-          case .failure: subject.send(completion: .failure(.requestFailed))
-          default: break
+      self.cancellable = self.session
+        .dataTaskPublisher(for: request)
+        .map(\.data)
+        .decode(type: dataType, decoder: self.decoder)
+        .sink(
+          receiveCompletion: { completion in
+            switch completion {
+            case .failure: promise(.failure(RemoteError.requestFailed))
+            default: break
+            }
+          },
+          receiveValue: { decodable in
+            promise(.success(decodable))
           }
-        },
-        receiveValue: { decodable in
-          subject.send(decodable)
-        }
-      )
-
-    return subject.eraseToAnyPublisher()
+        )
+    }
   }
 }
