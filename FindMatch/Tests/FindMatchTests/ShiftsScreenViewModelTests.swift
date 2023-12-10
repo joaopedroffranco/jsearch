@@ -4,6 +4,8 @@
 
 import XCTest
 import Nimble
+import CoreLocation
+import JFoundation
 @testable import FindMatch
 
 final class ShiftsScreenViewModelTests: XCTestCase {
@@ -67,6 +69,61 @@ final class ShiftsScreenViewModelTests: XCTestCase {
     // then
     expect(screenViewModel.state).notTo(equal(.loading))
     expect(screenViewModel.currentDate.weekDay).to(equal(Date.today.weekDay))
+  }
+
+  // MARK: - Location
+  func testGetTodayLocationRequesting() {
+    // given
+    let todayModel = ShiftsModelStub.instance()
+    let screenViewModel = makeScreenViewModel(with: todayModel, location: CLLocation.zero, locationStatus: .requesting)
+
+    // when
+    screenViewModel.getTodayShifts()
+
+    // then
+    expect(screenViewModel.state).to(equal(.loading))
+
+    guard let expectedTodayShiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: .today) else {
+      fail("The expected is nil")
+      return
+    }
+    expect(screenViewModel.state).toNotEventually(equal(.loaded(viewModels: [expectedTodayShiftsViewModel])))
+  }
+
+  func testGetTodayLocationDenied() {
+    // given
+    let todayModel = ShiftsModelStub.instance()
+    let screenViewModel = makeScreenViewModel(with: todayModel, locationStatus: .denied)
+
+    // when
+    screenViewModel.getTodayShifts()
+
+    // then
+    expect(screenViewModel.state).to(equal(.loading))
+
+    guard let expectedTodayShiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: .today) else {
+      fail("The expected is nil")
+      return
+    }
+    expect(screenViewModel.state).toEventually(equal(.loaded(viewModels: [expectedTodayShiftsViewModel])))
+  }
+
+  func testGetTodayWhenStatusChanged() {
+    // given
+    let todayModel = ShiftsModelStub.instance()
+    let screenViewModel = makeScreenViewModel(with: todayModel)
+
+    // when
+    screenViewModel.didChangeAuthorizationStatus()
+
+    // then
+    expect(screenViewModel.state).to(equal(.loading))
+
+    guard let expectedTodayShiftsViewModel = ShiftsViewModel(shiftsModel: todayModel, from: .today) else {
+      fail("The expected is nil")
+      return
+    }
+    expect(screenViewModel.state).toEventually(equal(.loaded(viewModels: [expectedTodayShiftsViewModel])))
   }
 
   // MARK: - Infinite Scroll
@@ -435,10 +492,15 @@ final class ShiftsScreenViewModelTests: XCTestCase {
 private extension ShiftsScreenViewModelTests {
   func makeScreenViewModel(
     with model: ShiftsModelStub? = .instance(),
-    router: FakeFindMatchRouter? = nil
+    router: FakeFindMatchRouter? = nil,
+    location: CLLocation? = nil,
+    locationStatus: LocationAuthorizationStatus = .authorized
   ) -> ShiftsScreenViewModel {
     let repository = FakeShiftsRepository(with: model)
-    let viewModel = ShiftsScreenViewModel(shiftsRepository: repository)
+    let viewModel = ShiftsScreenViewModel(
+      shiftsRepository: repository,
+      locationManager: FakeLocationManager(currentLocation: location, currentStatus: locationStatus)
+    )
     viewModel.routerDelegate = router
     return viewModel
   }

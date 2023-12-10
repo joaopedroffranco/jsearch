@@ -28,12 +28,12 @@ public class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProto
   var currentDate: Date = .today
 
   private var shiftsRepository: ShiftsRepositoryProtocol
-  private var locationManager: LocationManager
+  private var locationManager: LocationProtocol
   private let getFollowingThreshold = 2
 
   public init(
     shiftsRepository: ShiftsRepositoryProtocol = ShiftsRepository(),
-    locationManager: LocationManager = LocationManager()
+    locationManager: LocationProtocol = LocationManager()
   ) {
     self.shiftsRepository = shiftsRepository
     self.locationManager = locationManager

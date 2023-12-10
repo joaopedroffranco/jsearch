@@ -32,20 +32,12 @@ public struct ShiftModelStub: ShiftModel {
     earningsPerHour: "$ 13",
     job: JobModelStub.instance
   )
-
-  public static let noCategory = ShiftModelStub(
-    id: UUID().uuidString,
-    startsAt: .today.date(hour: 11, minutes: 30),
-    endsAt: .today.date(hour: 17, minutes: 50),
-    earningsPerHour: "$ 13",
-    job: JobModelStub.noCategory
-  )
 }
 
 public struct JobModelStub: JobModel {
   public var clientName: String
   public var imageURL: URL
-  public var category: String?
+  public var category: String
   public var address: AddressModel
 
   public static let instance = JobModelStub(
@@ -54,22 +46,10 @@ public struct JobModelStub: JobModel {
     category: "Serving",
     address: AddressModelStub.instance
   )
-
-  public static let noCategory = JobModelStub(
-    clientName: "Café",
-    imageURL: URL(string: "https://tmpr-photos.ams3.digitaloceanspaces.com/hero380/160951.jpg")!,
-    category: nil,
-    address: AddressModelStub.instance
-  )
 }
 
 public struct AddressModelStub: AddressModel {
   public var coordinate: CLLocation
 
-  public static let instance = AddressModelStub(
-    coordinate: CLLocation(
-      latitude: .zero,
-      longitude: .zero
-    )
-  )
+  public static let instance = AddressModelStub(coordinate: .zero)
 }

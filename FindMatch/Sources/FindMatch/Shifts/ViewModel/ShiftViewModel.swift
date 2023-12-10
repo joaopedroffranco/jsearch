@@ -26,7 +26,7 @@ class ShiftViewModel {
     self.init(
       image: .remote(url: jobModel.imageURL),
       title: jobModel.clientName,
-      period: "\(shiftModel.startsAt.hour) - \(shiftModel.endsAt.hour)",
+      period: "\(shiftModel.startsAt.hour) - \(shiftModel.endsAt.hour)", // TODO: Show other day
       earningsPerHour: shiftModel.earningsPerHour,
       info: info
     )

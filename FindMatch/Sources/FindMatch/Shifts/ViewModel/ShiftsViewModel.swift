@@ -10,7 +10,7 @@ class ShiftsViewModel {
   var day: String
   var shiftViewModels: [ShiftViewModel]
 
-  convenience init?(shiftsModel: ShiftsModel?, from date: Date, currentLocation: CLLocation?) {
+  convenience init?(shiftsModel: ShiftsModel?, from date: Date, currentLocation: CLLocation? = nil) {
     guard let shiftsModel, !shiftsModel.data.isEmpty else { return nil }
     let shiftViewModels = shiftsModel.data.map { ShiftViewModel(shiftModel: $0, currentLocation: currentLocation) }
     self.init(day: date.weekDay, shiftViewModels: shiftViewModels)
