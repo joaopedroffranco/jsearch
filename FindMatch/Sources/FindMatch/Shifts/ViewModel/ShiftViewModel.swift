@@ -23,10 +23,17 @@ class ShiftViewModel {
       info = "\(category) • \(distance) km"
     }
 
+    var period: String
+    if shiftModel.startsAt.isSameDay(shiftModel.endsAt) {
+      period = "\(shiftModel.startsAt.hour) - \(shiftModel.endsAt.hour)"
+    } else {
+      period = "\(shiftModel.startsAt.hour) - \(shiftModel.endsAt.hour) on \(shiftModel.endsAt.beautyString)"
+    }
+
     self.init(
       image: .remote(url: jobModel.imageURL),
       title: jobModel.clientName,
-      period: "\(shiftModel.startsAt.hour) - \(shiftModel.endsAt.hour)", // TODO: Show other day
+      period: period,
       earningsPerHour: shiftModel.earningsPerHour,
       info: info
     )

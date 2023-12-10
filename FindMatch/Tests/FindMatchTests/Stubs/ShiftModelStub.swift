@@ -32,6 +32,14 @@ public struct ShiftModelStub: ShiftModel {
     earningsPerHour: "$ 13",
     job: JobModelStub.instance
   )
+
+  public static let differentDates = ShiftModelStub(
+    id: UUID().uuidString,
+    startsAt: .today.date(hour: 11, minutes: 30),
+    endsAt: .today.following()?.date(hour: 17, minutes: 50) ?? .today,
+    earningsPerHour: "$ 13",
+    job: JobModelStub.instance
+  )
 }
 
 public struct JobModelStub: JobModel {

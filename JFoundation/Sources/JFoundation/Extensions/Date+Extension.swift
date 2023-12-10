@@ -13,6 +13,12 @@ public extension Date {
     return formatter.string(from: self)
   }
 
+  var beautyString: String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "dd, MMM"
+    return formatter.string(from: self)
+  }
+
   var weekDay: String {
     let formatter = DateFormatter()
     formatter.dateFormat = "EEEE d MMMM"
@@ -32,5 +38,9 @@ public extension Date {
 
   func following(_ value: Int = 1) -> Date? {
     Calendar.current.date(byAdding: .day, value: value, to: self)
+  }
+
+  func isSameDay(_ date: Date) -> Bool {
+    Calendar.current.isDate(self, equalTo: date, toGranularity: .day)
   }
 }
