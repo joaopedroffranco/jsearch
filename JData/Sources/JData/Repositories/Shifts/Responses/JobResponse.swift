@@ -7,14 +7,14 @@ import Foundation
 public protocol JobModel {
   var clientName: String { get }
   var imageURL: URL { get }
-  var category: String? { get }
+  var category: String { get }
   var address: AddressModel { get }
 }
 
 struct JobResponse: Decodable, JobModel {
   let clientName: String
   let imageURL: URL
-  let category: String?
+  let category: String
   let address: AddressModel
 
   enum CodingKeys: String, CodingKey {
@@ -62,6 +62,6 @@ struct JobResponse: Decodable, JobModel {
 
     let englishCategory = try? nameTranslationValues.decode(String.self, forKey: .english)
     let englishDutchCategory = try? nameTranslationValues.decode(String.self, forKey: .englishDutch)
-    category = englishCategory ?? englishDutchCategory
+    category = englishCategory ?? englishDutchCategory ?? "Job"
   }
 }

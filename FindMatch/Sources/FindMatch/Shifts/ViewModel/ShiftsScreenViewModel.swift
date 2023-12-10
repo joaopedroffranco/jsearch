@@ -28,10 +28,16 @@ public class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProto
   var currentDate: Date = .today
 
   private var shiftsRepository: ShiftsRepositoryProtocol
+  private var locationManager: LocationManager
   private let getFollowingThreshold = 2
 
-  public init(shiftsRepository: ShiftsRepositoryProtocol = ShiftsRepository()) {
+  public init(
+    shiftsRepository: ShiftsRepositoryProtocol = ShiftsRepository(),
+    locationManager: LocationManager = LocationManager()
+  ) {
     self.shiftsRepository = shiftsRepository
+    self.locationManager = locationManager
+    self.locationManager.delegate = self
   }
 
   func getTodayShifts(isPullRefreshing: Bool = false) {
@@ -41,9 +47,10 @@ public class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProto
       state = .loading
     }
 
+    guard locationManager.currentStatus != .requesting else { return }
+
     Task {
       let todayShiftsViewModel = await getShifts(from: currentDate)
-
       Task { @MainActor in
         if let todayShiftsViewModel {
           state = .loaded(viewModels: [todayShiftsViewModel])
@@ -108,6 +115,12 @@ public class ShiftsScreenViewModel: ObservableObject, ShiftsScreenViewModelProto
   }
 }
 
+extension ShiftsScreenViewModel: LocationDelegate {
+  public func didChangeAuthorizationStatus() {
+    getTodayShifts()
+  }
+}
+
 private extension ShiftsScreenViewModel {
   func getShifts(from date: Date) async -> ShiftsViewModel? {
     let shiftsModel = await shiftsRepository.getShifts(for: date)
@@ -115,7 +128,7 @@ private extension ShiftsScreenViewModel {
   }
 
   func viewModel(from model: ShiftsModel?, date: Date) -> ShiftsViewModel? {
-    ShiftsViewModel(shiftsModel: model, from: date)
+    ShiftsViewModel(shiftsModel: model, from: date, currentLocation: locationManager.currentLocation)
   }
 
   func shouldGetMoreShifts(sectionIndex: Int, daysCount: Int, index: Int, shiftsCount: Int) -> Bool {

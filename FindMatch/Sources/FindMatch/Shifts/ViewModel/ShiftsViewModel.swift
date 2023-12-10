@@ -3,17 +3,19 @@
 //
 
 import Foundation
+import CoreLocation
 import JData
 
 class ShiftsViewModel {
   var day: String
   var shiftViewModels: [ShiftViewModel]
 
-  convenience init?(shiftsModel: ShiftsModel?, from date: Date) {
+  convenience init?(shiftsModel: ShiftsModel?, from date: Date, currentLocation: CLLocation?) {
     guard let shiftsModel, !shiftsModel.data.isEmpty else { return nil }
-    let shiftViewModels = shiftsModel.data.map { ShiftViewModel(shiftModel: $0) }
+    let shiftViewModels = shiftsModel.data.map { ShiftViewModel(shiftModel: $0, currentLocation: currentLocation) }
     self.init(day: date.weekDay, shiftViewModels: shiftViewModels)
   }
+
 
   init(day: String, shiftViewModels: [ShiftViewModel]) {
     self.day = day

@@ -5,6 +5,7 @@
 import Foundation
 import JUI
 import JData
+import CoreLocation
 
 class ShiftViewModel {
   var image: ImageType
@@ -13,17 +14,21 @@ class ShiftViewModel {
   var earningsPerHour: String
   var info: String
 
-  convenience init(shiftModel: ShiftModel) {
+  convenience init(shiftModel: ShiftModel, currentLocation: CLLocation?) {
     let jobModel = shiftModel.job
-    // TODO: get location
-    let myLocation = "12 km"
     let category = jobModel.category
+
+    var info = category
+    if let distance = currentLocation?.kmDistance(from: jobModel.address.coordinate) {
+      info = "\(category) • \(distance) km"
+    }
+
     self.init(
       image: .remote(url: jobModel.imageURL),
       title: jobModel.clientName,
       period: "\(shiftModel.startsAt.hour) - \(shiftModel.endsAt.hour)",
       earningsPerHour: shiftModel.earningsPerHour,
-      info: category == nil ? myLocation : "\(category ?? "") • \(myLocation)"
+      info: info
     )
   }
 
