@@ -16,8 +16,6 @@ public class ShiftsRepository: ShiftsRepositoryProtocol {
   var dataSource: RemoteDataSourceProtocol
   var logger: LoggerProtocol
 
-  private var cancellable: AnyCancellable?
-
   public init(
     dataSource: RemoteDataSourceProtocol = URLSessionDataSource(),
     logger: LoggerProtocol = Logger()
@@ -27,20 +25,13 @@ public class ShiftsRepository: ShiftsRepositoryProtocol {
   }
 
   public func getShifts(for date: Date?) -> ShiftsPublisher {
-    Future { promise in
-      self.cancellable = self.dataSource
-        .fetch(request: TemperRequest.shifts(date: date), dataType: ShiftsResponse.self)
-        .sink(
-          receiveCompletion: { completion in
-            switch completion {
-            case .failure:
-              self.logger.log(topic: "Shifts Repository", message: "The fetch failed")
-              promise(.success(nil))
-            default: break
-            }
-          },
-          receiveValue: { shifts in promise(.success(shifts)) }
-        )
-    }.eraseToAnyPublisher()
+    dataSource
+      .fetch(
+        request: TemperRequest.shifts(date: date),
+        dataType: ShiftsResponse.self
+      )
+      .map { $0 }
+      .replaceError(with: nil)
+      .eraseToAnyPublisher()
   }
 }
