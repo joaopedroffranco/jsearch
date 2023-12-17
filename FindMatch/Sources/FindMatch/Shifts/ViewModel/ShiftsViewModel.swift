@@ -6,7 +6,7 @@ import Foundation
 import CoreLocation
 import JData
 
-struct ShiftsViewModel {
+public struct ShiftsViewModel {
   var day: String
   var shiftViewModels: [ShiftViewModel]
 
@@ -28,11 +28,11 @@ struct ShiftsViewModel {
 }
 
 extension ShiftsViewModel: Hashable {
-  func hash(into hasher: inout Hasher) {
+  public func hash(into hasher: inout Hasher) {
     hasher.combine(day)
   }
 
-  static func == (lhs: ShiftsViewModel, rhs: ShiftsViewModel) -> Bool {
+  public static func == (lhs: ShiftsViewModel, rhs: ShiftsViewModel) -> Bool {
     lhs.day == rhs.day &&
     lhs.shiftViewModels == rhs.shiftViewModels
   }

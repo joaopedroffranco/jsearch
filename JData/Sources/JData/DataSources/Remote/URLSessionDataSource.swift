@@ -38,4 +38,19 @@ public class URLSessionDataSource: RemoteDataSourceProtocol {
       }
       .eraseToAnyPublisher()
   }
+
+  public func fetch<T>(request: Requestable) async throws -> T where T : Decodable {
+    guard let request = request.request else {
+      logger.log(topic: "URL Session", message: "Invalid request")
+      throw RemoteError.invalidRequest
+    }
+
+    do {
+      let (response, _) = try await session.data(for: request)
+      return try decoder.decode(T.self, from: response)
+    } catch {
+      logger.log(topic: "URL Session", message: "Couldn't decode the response")
+      throw RemoteError.decodeError
+    }
+  }
 }

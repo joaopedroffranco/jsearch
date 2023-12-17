@@ -10,6 +10,7 @@ public typealias ShiftsPublisher = AnyPublisher<ShiftsModel?, Never>
 
 public protocol ShiftsRepositoryProtocol: AnyObject {
   func getShifts(for date: Date?) -> ShiftsPublisher
+  func getShifts(for date: Date?) async -> ShiftsModel?
 }
 
 public class ShiftsRepository: ShiftsRepositoryProtocol {
@@ -33,5 +34,17 @@ public class ShiftsRepository: ShiftsRepositoryProtocol {
       .map { $0 }
       .replaceError(with: nil)
       .eraseToAnyPublisher()
+  }
+
+  public func getShifts(for date: Date?) async -> ShiftsModel? {
+    do {
+      let response: ShiftsResponse = try await dataSource.fetch(
+        request: TemperRequest.shifts(date: date)
+      )
+      return response
+    } catch {
+      logger.log(topic: "Shifts Repository", message: "Couldn't get the shifts models")
+      return nil
+    }
   }
 }

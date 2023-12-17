@@ -65,10 +65,9 @@ extension FindMatchRouter: FindMatchRouterDelegate {
 
 private extension FindMatchRouter {
   func makeShiftsScreenViewController() -> UIViewController {
-    let viewModel = ShiftsScreenViewModel()
-    viewModel.routerDelegate = self
+    let shiftsFeature = ShiftsFeature()
 
-    let viewController = ShiftsViewController(viewModel: viewModel)
+    let viewController = ShiftsStoreViewController(feature: shiftsFeature)
     return viewController
   }
 
