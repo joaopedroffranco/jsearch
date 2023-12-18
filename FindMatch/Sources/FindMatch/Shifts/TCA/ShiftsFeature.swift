@@ -27,6 +27,11 @@ public struct ShiftsFeature: Reducer {
     case itemDidAppear(section: Int, index: Int)
     case getFollowingShifts
 
+    case goLogin
+    case goSignUp
+    case goFilters
+    case goKaart
+
     case fetched(shiftsViewModel: ShiftsViewModel, date: Date, shouldReset: Bool)
     case fetchFailed
   }
@@ -34,9 +39,14 @@ public struct ShiftsFeature: Reducer {
   private var shiftsRepository: ShiftsRepositoryProtocol
   private let getFollowingThreshold = 2
   private var cancellables = Set<AnyCancellable>()
+  private let routerDelegate: FindMatchRouterDelegate?
 
-  public init(shiftsRepository: ShiftsRepositoryProtocol = ShiftsRepository()) {
+  public init(
+    shiftsRepository: ShiftsRepositoryProtocol = ShiftsRepository(),
+    routerDelegate: FindMatchRouterDelegate? = nil
+  ) {
     self.shiftsRepository = shiftsRepository
+    self.routerDelegate = routerDelegate
   }
 
   public var body: some Reducer<State, Action> {
@@ -116,6 +126,18 @@ public struct ShiftsFeature: Reducer {
         return .none
       case .fetchFailed:
         state.viewState = .error
+        return .none
+      case .goKaart:
+        routerDelegate?.goKaart()
+        return .none
+      case .goLogin:
+        routerDelegate?.goLogin()
+        return .none
+      case .goFilters:
+        routerDelegate?.goFilters()
+        return .none
+      case .goSignUp:
+        routerDelegate?.goSignUp()
         return .none
       }
     }

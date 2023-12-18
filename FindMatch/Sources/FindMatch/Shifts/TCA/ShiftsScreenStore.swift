@@ -49,18 +49,18 @@ public struct ShiftsScreenStore: View {
             JFloatButton(
               icon: DesignSystem.Icons.filter,
               text: "Filters",
-              action: {}
+              action: { viewStore.send(.goFilters) }
             ),
             JFloatButton(
               icon: DesignSystem.Icons.map,
               text: "Kaart",
-              action: {}
+              action: { viewStore.send(.goKaart) }
             )
           ])
 
           AuthenticationEntryPointView(
-            signUpAction: {},
-            loginAction: {}
+            signUpAction: { viewStore.send(.goSignUp) },
+            loginAction: { viewStore.send(.goLogin) }
           )
         }
       }
