@@ -68,11 +68,3 @@ public struct ShiftsScreenStore: View {
     }
   }
 }
-
-struct ShiftsScreenStore_Previews: PreviewProvider {
-  static var previews: some View {
-    Group {
-      ShiftsScreenStore(store: Store(initialState: ShiftsFeature.State()) { ShiftsFeature() })
-    }
-  }
-}

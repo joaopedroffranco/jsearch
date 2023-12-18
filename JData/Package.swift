@@ -13,12 +13,13 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/Quick/Nimble.git", from: "12.0.0"),
+    .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "1.5.5"),
     .package(name: "JFoundation", path: "../JFoundation"),
   ],
   targets: [
     .target(
       name: "JData",
-      dependencies: ["JFoundation"]),
+      dependencies: ["JFoundation", .product(name: "ComposableArchitecture", package: "swift-composable-architecture")]),
     .testTarget(
       name: "JDataTests",
       dependencies: ["JData", "Nimble"],

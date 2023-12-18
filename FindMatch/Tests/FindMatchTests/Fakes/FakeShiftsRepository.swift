@@ -17,4 +17,8 @@ class FakeShiftsRepository: ShiftsRepositoryProtocol {
   func getShifts(for date: Date?) -> ShiftsPublisher {
     Just(model).eraseToAnyPublisher()
   }
+
+  func getShifts(for date: Date?) async -> ShiftsModel? {
+    model
+  }
 }

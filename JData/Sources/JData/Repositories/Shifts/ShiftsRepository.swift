@@ -4,6 +4,7 @@
 
 import Foundation
 import Combine
+import Dependencies
 import JFoundation
 
 public typealias ShiftsPublisher = AnyPublisher<ShiftsModel?, Never>
@@ -46,5 +47,16 @@ public class ShiftsRepository: ShiftsRepositoryProtocol {
       logger.log(topic: "Shifts Repository", message: "Couldn't get the shifts models")
       return nil
     }
+  }
+}
+
+extension ShiftsRepository: DependencyKey {
+  public static var liveValue: ShiftsRepository = .init()
+}
+
+public extension DependencyValues {
+  var shiftsRepository: ShiftsRepository {
+    get { self[ShiftsRepository.self] }
+    set { self[ShiftsRepository.self] = newValue  }
   }
 }

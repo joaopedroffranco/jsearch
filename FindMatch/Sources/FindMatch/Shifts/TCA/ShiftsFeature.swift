@@ -36,16 +36,12 @@ public struct ShiftsFeature: Reducer {
     case fetchFailed
   }
 
-  private var shiftsRepository: ShiftsRepositoryProtocol
+  @Dependency(\.shiftsRepository) var shiftsRepository
+
   private let getFollowingThreshold = 2
-  private var cancellables = Set<AnyCancellable>()
   private let routerDelegate: FindMatchRouterDelegate?
 
-  public init(
-    shiftsRepository: ShiftsRepositoryProtocol = ShiftsRepository(),
-    routerDelegate: FindMatchRouterDelegate? = nil
-  ) {
-    self.shiftsRepository = shiftsRepository
+  public init(routerDelegate: FindMatchRouterDelegate? = nil) {
     self.routerDelegate = routerDelegate
   }
 

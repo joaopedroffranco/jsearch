@@ -5,6 +5,7 @@
 import UIKit
 import SwiftUI
 import ComposableArchitecture
+import JData
 
 public class ShiftsViewController: UIHostingController<ShiftsScreen> {
   public init(viewModel: ShiftsScreenViewModel = ShiftsScreenViewModel()) {
@@ -20,9 +21,14 @@ public class ShiftsViewController: UIHostingController<ShiftsScreen> {
 
 public class ShiftsStoreViewController: UIHostingController<ShiftsScreenStore> {
   public init(feature: ShiftsFeature = ShiftsFeature()) {
-    let shiftsScreen = ShiftsScreenStore(
-      store: Store(initialState: ShiftsFeature.State()) { feature }
-    )
+    let store = Store(
+      initialState: ShiftsFeature.State()) {
+        feature
+      } withDependencies: { dependencies in
+        dependencies.shiftsRepository = ShiftsRepository()
+      }
+
+    let shiftsScreen = ShiftsScreenStore(store: store)
     super.init(rootView: shiftsScreen)
     navigationItem.title = "Jobs"
   }

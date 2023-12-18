@@ -30,7 +30,7 @@ let package = Package(
     ),
     .testTarget(
       name: "FindMatchTests",
-      dependencies: ["FindMatch", "Nimble", "JData"]
+      dependencies: ["FindMatch", "Nimble", "JData", .product(name: "ComposableArchitecture", package: "swift-composable-architecture")]
     ),
   ]
 )
